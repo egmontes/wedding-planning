@@ -421,6 +421,37 @@
     ).join('');
   }
 
+  // ── CATEGORY MIGRATION ──
+  // Finds tasks whose category doesn't match any known category and tries to auto-fix.
+  // Matching logic: case-insensitive substring match in either direction.
+  async function migrateMismatchedCategories() {
+    const knownNames = allCategories.map(c => c.name);
+    const mismatched = allTasks.filter(t =>
+      t.category !== '__deleted__' && !knownNames.includes(t.category)
+    );
+    if (mismatched.length === 0) return;
+
+    const batch = writeBatch(db);
+    let fixed = 0;
+    mismatched.forEach(t => {
+      const tCat = t.category?.toLowerCase() || '';
+      // Try to find a category that contains or is contained by the task's category
+      const match = allCategories.find(c => {
+        const cName = c.name.toLowerCase();
+        return cName.includes(tCat) || tCat.includes(cName);
+      });
+      if (match) {
+        batch.update(doc(db, 'wedding/tasks/items', t.id), { category: match.name });
+        fixed++;
+      }
+    });
+    if (fixed > 0) {
+      await batch.commit();
+      console.log(`Migrated ${fixed} task(s) to matching categories`);
+    }
+    // Any still unmatched after this will just not appear — user can fix via edit
+  }
+
   // ── INIT: LOAD CATEGORIES THEN TASKS ──
   async function init() {
     if (USE_LOCAL) {
@@ -462,9 +493,10 @@
       });
 
       // Live listen to tasks
-      onSnapshot(query(tasksRef, orderBy('createdAt', 'asc')), snap => {
+      onSnapshot(query(tasksRef, orderBy('createdAt', 'asc')), async snap => {
         allTasks = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-        document.getElementById('seed-banner').style.display = 'none'; // never show on Firebase
+        document.getElementById('seed-banner').style.display = 'none';
+        await migrateMismatchedCategories();
         render();
       });
     }
