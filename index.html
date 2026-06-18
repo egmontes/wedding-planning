@@ -79,7 +79,35 @@
   .filter-row { display: flex; gap: 6px; margin-bottom: 16px; overflow-x: auto; padding-bottom: 4px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
   .filter-row::-webkit-scrollbar { display: none; }
   .filter-chip { background: var(--ivory-dark); border: 1.5px solid var(--border); border-radius: 20px; padding: 6px 13px; font-size: 13px; font-family: 'DM Sans', sans-serif; color: var(--text-muted); cursor: pointer; white-space: nowrap; transition: all 0.15s; flex-shrink: 0; }
+  .filter-row-status { overflow: visible; }
+  .filter-row-status .filter-chip { flex: 1; text-align: center; padding: 6px 4px; }
   .filter-chip.active { background: var(--navy); border-color: var(--navy); color: white; }
+  .scroll-fade-wrap {
+    position: relative;
+  }
+  .scroll-fade-wrap::before,
+  .scroll-fade-wrap::after {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 28px;
+    pointer-events: none;
+    z-index: 2;
+    transition: opacity 0.2s;
+  }
+  .scroll-fade-wrap::before {
+    left: 0;
+    background: linear-gradient(to right, var(--ivory), transparent);
+    opacity: 0;
+  }
+  .scroll-fade-wrap::after {
+    right: 0;
+    background: linear-gradient(to left, var(--ivory), transparent);
+    opacity: 1;
+  }
+  .scroll-fade-wrap.at-start::before { opacity: 0; }
+  .scroll-fade-wrap.at-end::after { opacity: 0; }
+  .scroll-fade-wrap.scrollable::before { opacity: 1; }
   .filter-chip.tapped { background: var(--rose); border-color: var(--rose); color: white; transform: scale(0.93); transition: transform 0.1s ease, background 0.1s ease; }
 
   /* CATEGORY GROUP */
@@ -173,14 +201,16 @@
 </div>
 
 <div class="filter-sticky">
-  <div class="filter-row">
+  <div class="filter-row filter-row-status">
     <div class="filter-chip active" onclick="setFilter('all',this)">All</div>
     <div class="filter-chip" onclick="setFilter('todo',this)">To Do</div>
     <div class="filter-chip" onclick="setFilter('done',this)">Done</div>
     <div class="filter-chip" onclick="setFilter('lexi',this)">Lexi</div>
     <div class="filter-chip" onclick="setFilter('eddy',this)">Eddy</div>
   </div>
-  <div class="filter-row" id="category-nav"></div>
+  <div class="scroll-fade-wrap">
+    <div class="filter-row" id="category-nav"></div>
+  </div>
 </div>
 
 <div class="main">
@@ -550,6 +580,20 @@
     }
     // Recalculate offset now that category nav is populated
     setStickyTop();
+
+    // Update category nav fade indicators
+    const navEl = document.getElementById('category-nav');
+    const wrap = navEl.parentElement;
+    function updateFade() {
+      const atStart = navEl.scrollLeft <= 2;
+      const atEnd = navEl.scrollLeft >= navEl.scrollWidth - navEl.clientWidth - 2;
+      wrap.classList.toggle('at-start', atStart);
+      wrap.classList.toggle('at-end', atEnd);
+      wrap.classList.toggle('scrollable', navEl.scrollLeft > 2);
+    }
+    navEl.removeEventListener('scroll', updateFade);
+    navEl.addEventListener('scroll', updateFade, { passive: true });
+    setTimeout(updateFade, 50);
   }
 
   function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
