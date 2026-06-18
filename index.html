@@ -121,6 +121,8 @@
   textarea.modal-input { resize: vertical; min-height: 60px; }
   .modal-row { display: flex; gap: 8px; margin-bottom: 12px; }
   .modal-select { flex: 1; border: 1.5px solid var(--border); border-radius: 10px; padding: 9px 11px; font-size: 13px; font-family: 'DM Sans', sans-serif; background: var(--surface); outline: none; appearance: none; -webkit-appearance: none; color: var(--text); }
+  input[type="date"].modal-select { min-height: 42px; -webkit-appearance: none; appearance: none; display: block; width: 100%; color: var(--text); padding: 9px 11px; }
+  input[type="date"].modal-select::-webkit-date-and-time-value { text-align: left; min-height: 22px; }
   .modal-actions { display: flex; gap: 8px; margin-top: 4px; }
   .btn-save { flex: 1; background: var(--rose); color: white; border: none; border-radius: 10px; padding: 13px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; }
   .btn-cancel { background: var(--ivory-dark); color: var(--text-muted); border: none; border-radius: 10px; padding: 13px 16px; font-family: 'DM Sans', sans-serif; font-size: 15px; cursor: pointer; }
@@ -708,14 +710,35 @@
     const icon = document.getElementById('edit-cat-icon').value.trim() || '📋';
     const name = document.getElementById('edit-cat-name').value.trim();
     if (!name) return;
+    const oldCat = allCategories.find(c => c.id === editingCatId);
+    const oldName = oldCat?.name;
     if (USE_LOCAL) {
+      // Update category
       const cats = lsLoadCats().map(c => c.id === editingCatId ? { ...c, name, icon } : c);
       lsSaveCats(cats);
       allCategories = cats;
+      // Update all tasks with old category name
+      if (oldName && oldName !== name) {
+        const tasks = lsLoadTasks().map(t => t.category === oldName ? { ...t, category: name } : t);
+        lsSaveTasks(tasks);
+        allTasks = tasks;
+      }
       renderCatManager();
       render();
     } else {
+      // Update category doc
       await updateDoc(doc(db, 'wedding/config/categories', editingCatId), { name, icon });
+      // Batch update all tasks with the old category name
+      if (oldName && oldName !== name) {
+        const affectedTasks = allTasks.filter(t => t.category === oldName);
+        if (affectedTasks.length > 0) {
+          const batch = writeBatch(db);
+          affectedTasks.forEach(t => {
+            batch.update(doc(db, 'wedding/tasks/items', t.id), { category: name });
+          });
+          await batch.commit();
+        }
+      }
     }
     closeEditCat();
     showToast('Category updated');
