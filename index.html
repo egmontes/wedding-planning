@@ -46,12 +46,22 @@
   .countdown-sep { font-family: 'Cormorant Garant', serif; font-size: 26px; color: var(--navy-light); align-self: flex-start; margin-top: 2px; }
 
   /* PROGRESS */
-  .progress-wrap { background: var(--ivory-dark); padding: 10px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+  .progress-wrap { position: sticky; top: var(--hero-h, 0px); z-index: 95; background: var(--ivory-dark); padding: 10px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
   .progress-bar-outer { flex: 1; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
   .progress-bar-inner { height: 100%; background: linear-gradient(90deg, var(--rose), var(--gold)); border-radius: 3px; transition: width 0.4s ease; }
   .progress-label { font-size: 12px; color: var(--text-muted); white-space: nowrap; }
 
   /* MAIN */
+  .filter-sticky {
+    position: sticky;
+    top: var(--filter-top, 0px);
+    background: var(--ivory);
+    padding: 8px 16px 6px;
+    z-index: 90;
+    border-bottom: 1px solid var(--border);
+  }
+  .filter-sticky .filter-row { margin-bottom: 6px; padding: 0; }
+  .filter-sticky .filter-row:last-child { margin-bottom: 2px; }
   .main { padding: 14px 14px 100px; max-width: 600px; margin: 0 auto; }
 
   /* ADD SECTION */
@@ -151,6 +161,17 @@
   <div class="progress-label" id="progress-label">0 / 0 done</div>
 </div>
 
+<div class="filter-sticky">
+  <div class="filter-row">
+    <div class="filter-chip active" onclick="setFilter('all',this)">All</div>
+    <div class="filter-chip" onclick="setFilter('todo',this)">To Do</div>
+    <div class="filter-chip" onclick="setFilter('done',this)">Done</div>
+    <div class="filter-chip" onclick="setFilter('lexi',this)">Lexi</div>
+    <div class="filter-chip" onclick="setFilter('eddy',this)">Eddy</div>
+  </div>
+  <div class="filter-row" id="category-nav"></div>
+</div>
+
 <div class="main">
 
   <div id="seed-banner" class="seed-banner" style="display:none">
@@ -188,15 +209,6 @@
       <input type="date" class="due-input" id="task-due">
     </div>
   </div>
-
-  <div class="filter-row">
-    <div class="filter-chip active" onclick="setFilter('all',this)">All</div>
-    <div class="filter-chip" onclick="setFilter('todo',this)">To Do</div>
-    <div class="filter-chip" onclick="setFilter('done',this)">Done</div>
-    <div class="filter-chip" onclick="setFilter('lexi',this)">Lexi</div>
-    <div class="filter-chip" onclick="setFilter('eddy',this)">Eddy</div>
-  </div>
-  <div class="filter-row" id="category-nav"></div>
 
   <div id="task-list"><div class="loading">Loading your list…</div></div>
 
@@ -374,6 +386,18 @@
   updateCountdown();
   setInterval(updateCountdown, 30000);
 
+  // Set sticky top offset for filter rows
+  function setStickyTop() {
+    const heroH = document.querySelector('.hero').offsetHeight;
+    const progressH = document.querySelector('.progress-wrap').offsetHeight;
+    const filterH = document.querySelector('.filter-sticky').offsetHeight;
+    document.documentElement.style.setProperty('--hero-h', heroH + 'px');
+    document.documentElement.style.setProperty('--filter-top', (heroH + progressH) + 'px');
+    window._stickyOffset = heroH + progressH + filterH + 8;
+  }
+  setStickyTop();
+  window.addEventListener('resize', setStickyTop);
+
   // START LISTENER
   if (USE_LOCAL) {
     lsNotify();
@@ -498,14 +522,18 @@
       chip.onclick = () => {
         const el = document.getElementById('cat-' + cat.replace(/[^a-zA-Z0-9]/g, '-'));
         if (el) {
-          const offset = document.querySelector('.hero').offsetHeight +
-                         document.querySelector('.progress-wrap').offsetHeight + 16;
+          const heroH = document.querySelector('.hero').offsetHeight;
+          const progressH = document.querySelector('.progress-wrap').offsetHeight;
+          const filterH = document.querySelector('.filter-sticky').offsetHeight;
+          const offset = heroH + progressH + filterH + 8;
           const top = el.getBoundingClientRect().top + window.scrollY - offset;
           window.scrollTo({ top, behavior: 'smooth' });
         }
       };
       nav.appendChild(chip);
     }
+    // Recalculate offset now that category nav is populated
+    setStickyTop();
   }
 
   function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
