@@ -490,6 +490,7 @@
       let catsReady = false, tasksReady = false;
 
       async function onBothReady() {
+        console.log('onBothReady called — catsReady:', catsReady, 'tasksReady:', tasksReady, 'cats:', allCategories.length, 'tasks:', allTasks.length);
         if (!catsReady || !tasksReady) return;
         await migrateMismatchedCategories();
         render();
