@@ -8,35 +8,19 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --navy: #3D0A1A;
-    --navy-light: #5C1020;
-    --ivory: #F5EDE0;
-    --ivory-dark: #EDE0CE;
-    --rose: #7A2040;
-    --rose-dark: #5C1020;
-    --gold: #D4BC8A;
-    --slate: #C4A0A8;
-    --green: #6A9E7A;
-    --amber: #B8860B;
-    --text: #3D0A1A;
-    --text-muted: #8B5A65;
-    --surface: #FFFFFF;
-    --border: #E0CECE;
+    --navy: #3D0A1A; --navy-light: #5C1020;
+    --ivory: #F5EDE0; --ivory-dark: #EDE0CE;
+    --rose: #7A2040; --rose-dark: #5C1020;
+    --gold: #D4BC8A; --slate: #C4A0A8;
+    --green: #6A9E7A; --amber: #B8860B;
+    --text: #3D0A1A; --text-muted: #8B5A65;
+    --surface: #FFFFFF; --border: #E0CECE;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'DM Sans', sans-serif; background: var(--ivory); color: var(--text); min-height: 100vh; }
 
   /* HERO */
-  .hero {
-    background: var(--navy);
-    color: white;
-    padding: 24px 20px 20px;
-    text-align: center;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 2px 12px rgba(61,10,26,0.4);
-  }
+  .hero { background: var(--navy); color: white; padding: 24px 20px 20px; text-align: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(61,10,26,0.4); }
   .hero-eyebrow { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--slate); margin-bottom: 4px; }
   .hero-title { font-family: 'Cormorant Garant', serif; font-size: 24px; font-weight: 600; color: var(--ivory); margin-bottom: 14px; }
   .countdown { display: flex; justify-content: center; gap: 14px; }
@@ -51,22 +35,11 @@
   .progress-bar-inner { height: 100%; background: linear-gradient(90deg, var(--rose), var(--gold)); border-radius: 3px; transition: width 0.4s ease; }
   .progress-label { font-size: 12px; color: var(--text-muted); white-space: nowrap; }
 
-  /* MAIN */
-  .filter-sticky {
-    position: sticky;
-    top: var(--filter-top, 0px);
-    background: var(--ivory);
-    padding: 8px 16px 6px;
-    z-index: 90;
-    border-bottom: 1px solid var(--border);
-  }
+  /* FILTER STICKY */
+  .filter-sticky { position: sticky; top: var(--filter-top, 0px); background: var(--ivory); padding: 8px 16px 6px; z-index: 90; border-bottom: 1px solid var(--border); }
   .filter-sticky .filter-row { margin-bottom: 6px; padding: 0; }
   .filter-sticky .filter-row:last-child { margin-bottom: 2px; }
   .main { padding: 14px 14px 100px; max-width: 600px; margin: 0 auto; }
-
-  /* ADD SECTION */
-  .add-input:focus { border-color: var(--rose); }
-  .meta-select { appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238FA3BF' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; padding-right: 28px; }
 
   /* FILTERS */
   .filter-row { display: flex; gap: 6px; margin-bottom: 16px; overflow-x: auto; padding-bottom: 4px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
@@ -75,53 +48,24 @@
   .filter-row-status { overflow: visible; }
   .filter-row-status .filter-chip { flex: 1; text-align: center; padding: 6px 4px; }
   .filter-chip.active { background: var(--navy); border-color: var(--navy); color: white; }
-  .scroll-fade-wrap {
-    position: relative;
-  }
-  .scroll-fade-wrap::before,
-  .scroll-fade-wrap::after {
-    content: '';
-    position: absolute;
-    top: 0; bottom: 0;
-    width: 28px;
-    pointer-events: none;
-    z-index: 2;
-    transition: opacity 0.2s;
-  }
-  .scroll-fade-wrap::before {
-    left: 0;
-    background: linear-gradient(to right, var(--ivory), transparent);
-    opacity: 0;
-  }
-  .scroll-fade-wrap::after {
-    right: 0;
-    background: linear-gradient(to left, var(--ivory), transparent);
-    opacity: 1;
-  }
+  .filter-chip.tapped { background: var(--rose); border-color: var(--rose); color: white; transform: scale(0.93); transition: transform 0.1s ease, background 0.1s ease; }
+  .scroll-fade-wrap { position: relative; }
+  .scroll-fade-wrap::before, .scroll-fade-wrap::after { content: ''; position: absolute; top: 0; bottom: 0; width: 28px; pointer-events: none; z-index: 2; transition: opacity 0.2s; }
+  .scroll-fade-wrap::before { left: 0; background: linear-gradient(to right, var(--ivory), transparent); opacity: 0; }
+  .scroll-fade-wrap::after { right: 0; background: linear-gradient(to left, var(--ivory), transparent); opacity: 1; }
   .scroll-fade-wrap.at-start::before { opacity: 0; }
   .scroll-fade-wrap.at-end::after { opacity: 0; }
   .scroll-fade-wrap.scrollable::before { opacity: 1; }
-  .filter-chip.tapped { background: var(--rose); border-color: var(--rose); color: white; transform: scale(0.93); transition: transform 0.1s ease, background 0.1s ease; }
 
   /* CATEGORY GROUP */
   .category-group { margin-bottom: 18px; }
-  .category-header {
-    display: flex; align-items: center; gap: 8px; margin-bottom: 9px; padding: 6px 2px 6px;
-    position: sticky;
-    top: var(--section-top, 0px);
-    background: var(--ivory);
-    z-index: 80;
-    margin-left: -14px;
-    margin-right: -14px;
-    padding-left: 16px;
-    padding-right: 16px;
-  }
+  .category-header { display: flex; align-items: center; gap: 8px; margin-bottom: 9px; position: sticky; top: var(--section-top, 0px); background: var(--ivory); z-index: 80; margin-left: -14px; margin-right: -14px; padding: 6px 16px; }
   .category-icon { font-size: 15px; }
   .category-name { font-family: 'Cormorant Garant', serif; font-size: 18px; font-weight: 600; color: var(--text); font-style: italic; flex: 1; }
   .category-count { font-size: 11px; color: var(--text-muted); background: var(--ivory-dark); padding: 2px 8px; border-radius: 10px; }
 
   /* TASK CARD */
-  .task-card { background: var(--surface); border-radius: 12px; padding: 12px 14px; margin-bottom: 7px; border: 1px solid var(--border); display: flex; align-items: flex-start; gap: 11px; box-shadow: 0 1px 3px rgba(61,10,26,0.07); transition: opacity 0.2s; }
+  .task-card { background: var(--surface); border-radius: 12px; padding: 12px 14px; margin-bottom: 7px; border: 1px solid var(--border); display: flex; align-items: flex-start; gap: 11px; box-shadow: 0 1px 3px rgba(61,10,26,0.07); transition: opacity 0.2s; cursor: pointer; }
   .task-card.done { opacity: 0.5; }
   .task-card.done .task-text { text-decoration: line-through; }
   .task-checkbox { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--border); cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; transition: border-color 0.15s, background 0.15s; }
@@ -131,15 +75,12 @@
   .task-text { font-size: 14px; line-height: 1.4; color: var(--text); word-break: break-word; }
   .task-meta { display: flex; align-items: center; gap: 6px; margin-top: 5px; flex-wrap: wrap; }
   .task-due { font-size: 11px; color: var(--text-muted); }
-  .task-completed { font-size: 11px; color: var(--green); }
   .task-due.overdue { color: var(--rose); font-weight: 600; }
+  .task-completed { font-size: 11px; color: var(--green); }
   .task-owner { font-size: 10px; padding: 2px 7px; border-radius: 10px; font-weight: 500; }
   .owner-lexi { background: #f5e0e8; color: #7A2040; }
   .owner-eddy { background: #e8dff0; color: #4A2060; }
   .owner-both { background: #e8e0d5; color: #5C3A20; }
-  .task-status { font-size: 10px; padding: 2px 7px; border-radius: 10px; }
-  .status-complete { background: #e8f5e9; color: var(--green); font-weight: 600; }
-  .status-progress { background: #fff3e0; color: var(--amber); font-weight: 600; }
   .task-details { font-size: 11px; color: var(--text-muted); margin-top: 3px; font-style: italic; line-height: 1.4; }
   .task-delete { background: none; border: none; cursor: pointer; color: var(--border); font-size: 18px; padding: 0 2px; line-height: 1; flex-shrink: 0; transition: color 0.15s; }
   .task-delete:hover { color: var(--rose); }
@@ -158,41 +99,44 @@
   .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--navy); color: white; padding: 10px 20px; border-radius: 24px; font-size: 13px; pointer-events: none; transition: transform 0.25s ease; z-index: 999; white-space: nowrap; }
   .toast.show { transform: translateX(-50%) translateY(0); }
 
-  /* EDIT MODAL */
-  .fab {
-    position: fixed;
-    bottom: 28px;
-    right: 22px;
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background: var(--rose);
-    color: white;
-    font-size: 30px;
-    line-height: 1;
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 4px 16px rgba(61,10,26,0.3);
-    z-index: 400;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.15s, background 0.15s;
-  }
+  /* FAB */
+  .fab { position: fixed; bottom: 28px; right: 22px; width: 56px; height: 56px; border-radius: 50%; background: var(--rose); color: white; font-size: 30px; border: none; cursor: pointer; box-shadow: 0 4px 16px rgba(61,10,26,0.3); z-index: 400; display: flex; align-items: center; justify-content: center; transition: transform 0.15s, background 0.15s; }
   .fab:active { transform: scale(0.92); background: var(--rose-dark); }
+
+  /* MANAGE BTN */
+  .manage-btn { position: fixed; bottom: 28px; left: 22px; height: 40px; padding: 0 16px; border-radius: 20px; background: var(--ivory-dark); border: 1.5px solid var(--border); color: var(--text-muted); font-size: 13px; font-family: 'DM Sans', sans-serif; cursor: pointer; z-index: 400; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 8px rgba(61,10,26,0.1); }
+  .manage-btn:active { background: var(--border); }
+
+  /* MODALS */
   .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(61,10,26,0.55); z-index: 500; align-items: flex-end; }
   .modal-overlay.open { display: flex; }
-  .modal-sheet { background: var(--ivory); border-radius: 20px 20px 0 0; padding: 18px 18px 34px; width: 100%; max-width: 600px; margin: 0 auto; box-shadow: 0 -4px 24px rgba(61,10,26,0.2); transition: transform 0.25s ease; touch-action: none; }
+  .modal-sheet { background: var(--ivory); border-radius: 20px 20px 0 0; padding: 18px 18px 34px; width: 100%; max-width: 600px; margin: 0 auto; box-shadow: 0 -4px 24px rgba(61,10,26,0.2); transition: transform 0.25s ease; touch-action: none; max-height: 90vh; overflow-y: auto; }
   .modal-handle { width: 36px; height: 4px; background: var(--border); border-radius: 2px; margin: 0 auto 14px; }
-  .modal-title { font-family: 'Cormorant Garant', serif; font-size: 20px; font-weight: 600; margin-bottom: 12px; }
+  .modal-title { font-family: 'Cormorant Garant', serif; font-size: 20px; font-weight: 600; margin-bottom: 12px; color: var(--text); }
   .modal-input { width: 100%; border: 1.5px solid var(--border); border-radius: 10px; padding: 11px 13px; font-size: 15px; font-family: 'DM Sans', sans-serif; color: var(--text); background: var(--surface); outline: none; margin-bottom: 9px; }
   .modal-input:focus { border-color: var(--rose); }
   textarea.modal-input { resize: vertical; min-height: 60px; }
   .modal-row { display: flex; gap: 8px; margin-bottom: 12px; }
-  .modal-select { flex: 1; border: 1.5px solid var(--border); border-radius: 10px; padding: 9px 11px; font-size: 13px; font-family: 'DM Sans', sans-serif; background: var(--surface); outline: none; appearance: none; -webkit-appearance: none; }
-  .modal-actions { display: flex; gap: 8px; }
+  .modal-select { flex: 1; border: 1.5px solid var(--border); border-radius: 10px; padding: 9px 11px; font-size: 13px; font-family: 'DM Sans', sans-serif; background: var(--surface); outline: none; appearance: none; -webkit-appearance: none; color: var(--text); }
+  .modal-actions { display: flex; gap: 8px; margin-top: 4px; }
   .btn-save { flex: 1; background: var(--rose); color: white; border: none; border-radius: 10px; padding: 13px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; }
   .btn-cancel { background: var(--ivory-dark); color: var(--text-muted); border: none; border-radius: 10px; padding: 13px 16px; font-family: 'DM Sans', sans-serif; font-size: 15px; cursor: pointer; }
+  .modal-label { font-size: 11px; color: var(--text-muted); display: block; margin-bottom: 4px; }
+
+  /* CATEGORY MANAGER */
+  .cat-list { margin-bottom: 16px; }
+  .cat-item { display: flex; align-items: center; gap: 10px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; margin-bottom: 7px; }
+  .cat-item-icon { font-size: 18px; width: 28px; text-align: center; cursor: pointer; }
+  .cat-item-name { flex: 1; font-size: 14px; color: var(--text); }
+  .cat-item-edit { background: none; border: none; font-size: 13px; color: var(--text-muted); cursor: pointer; padding: 4px 8px; border-radius: 6px; }
+  .cat-item-edit:hover { background: var(--ivory-dark); }
+  .cat-item-delete { background: none; border: none; font-size: 16px; color: var(--border); cursor: pointer; padding: 2px 4px; }
+  .cat-item-delete:hover { color: var(--rose); }
+  .add-cat-row { display: flex; gap: 8px; margin-bottom: 8px; }
+  .add-cat-icon { width: 48px; border: 1.5px solid var(--border); border-radius: 10px; padding: 9px 4px; font-size: 18px; text-align: center; background: var(--surface); outline: none; }
+  .add-cat-name { flex: 1; border: 1.5px solid var(--border); border-radius: 10px; padding: 9px 12px; font-size: 14px; font-family: 'DM Sans', sans-serif; background: var(--surface); outline: none; color: var(--text); }
+  .add-cat-name:focus, .add-cat-icon:focus { border-color: var(--rose); }
+  .add-cat-btn { background: var(--rose); color: white; border: none; border-radius: 10px; padding: 9px 16px; font-size: 14px; font-weight: 600; cursor: pointer; white-space: nowrap; }
 </style>
 </head>
 <body>
@@ -228,16 +172,44 @@
 </div>
 
 <div class="main">
-
   <div id="seed-banner" class="seed-banner" style="display:none">
-    🌸 Import your existing tasks from the spreadsheet?
+    🌸 Import your existing tasks?
     <button onclick="seedTasks()">Import Now</button>
   </div>
-
-
-
   <div id="task-list"><div class="loading">Loading your list…</div></div>
+</div>
 
+<!-- FAB -->
+<button class="fab" onclick="openAdd()" title="Add task">+</button>
+<button class="manage-btn" onclick="openManage()">⚙️ Categories</button>
+
+<!-- Add Modal -->
+<div class="modal-overlay" id="add-modal">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">New Task</div>
+    <input type="text" class="modal-input" id="add-text" placeholder="Task name" maxlength="200">
+    <textarea class="modal-input" id="add-details" placeholder="Notes (optional)" rows="2"></textarea>
+    <div class="modal-row">
+      <select class="modal-select" id="add-category"></select>
+      <select class="modal-select" id="add-owner">
+        <option value="">No owner</option>
+        <option value="Lexi">Lexi</option>
+        <option value="Eddy">Eddy</option>
+        <option value="Lexi+Eddy">Both</option>
+      </select>
+    </div>
+    <div class="modal-row">
+      <div style="flex:1">
+        <label class="modal-label">Due Date</label>
+        <input type="date" class="modal-select" id="add-due" style="width:100%">
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeAdd()">Cancel</button>
+      <button class="btn-save" onclick="addTask()">Add Task</button>
+    </div>
+  </div>
 </div>
 
 <!-- Edit Modal -->
@@ -248,21 +220,7 @@
     <input type="text" class="modal-input" id="edit-text" maxlength="200">
     <textarea class="modal-input" id="edit-details" placeholder="Notes / details (optional)" rows="2"></textarea>
     <div class="modal-row">
-      <select class="modal-select" id="edit-category">
-        <option value="Big Picture">🌟 Big Picture</option>
-        <option value="Wedding Party">💒 Wedding Party</option>
-        <option value="Lexi Bachelorette Party">🥂 Lexi Bachelorette Party</option>
-        <option value="Eddy Bachelor Party">🍻 Eddy Bachelor Party</option>
-        <option value="Hotel Block Prep">🏨 Hotel Block Prep</option>
-        <option value="St. Agnes Prep Steps">⛪ St. Agnes Prep Steps</option>
-        <option value="Rusty Pelican Prep Steps">🍽️ Rusty Pelican Prep Steps</option>
-        <option value="Transportation Prep">🚌 Transportation Prep</option>
-        <option value="DJ Prep">🎶 DJ Prep</option>
-        <option value="After Party Prep">🎉 After Party Prep</option>
-        <option value="January 29th, 2027 — Rehearsal Dinner!">🕯️ Rehearsal Dinner</option>
-        <option value="January 30th, 2027 — Wedding Day!">💍 Wedding Day</option>
-        <option value="Other">📋 Other</option>
-      </select>
+      <select class="modal-select" id="edit-category"></select>
       <select class="modal-select" id="edit-owner">
         <option value="">No owner</option>
         <option value="Lexi">Lexi</option>
@@ -272,11 +230,11 @@
     </div>
     <div class="modal-row">
       <div style="flex:1">
-        <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:4px;">Due Date</label>
+        <label class="modal-label">Due Date</label>
         <input type="date" class="modal-select" id="edit-due" style="width:100%">
       </div>
       <div style="flex:1">
-        <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:4px;">Date Completed</label>
+        <label class="modal-label">Date Completed</label>
         <input type="date" class="modal-select" id="edit-completed" style="width:100%">
       </div>
     </div>
@@ -287,53 +245,40 @@
   </div>
 </div>
 
-<div class="toast" id="toast"></div>
-
-<!-- FAB -->
-<button class="fab" onclick="openAdd()" title="Add task">+</button>
-
-<!-- Add Modal -->
-<div class="modal-overlay" id="add-modal">
+<!-- Manage Categories Modal -->
+<div class="modal-overlay" id="manage-modal">
   <div class="modal-sheet">
     <div class="modal-handle"></div>
-    <div class="modal-title">New Task</div>
-    <input type="text" class="modal-input" id="add-text" placeholder="Task name" maxlength="200">
-    <textarea class="modal-input" id="add-details" placeholder="Notes (optional)" rows="2"></textarea>
-    <div class="modal-row">
-      <select class="modal-select" id="add-category">
-        <option value="Big Picture">🌟 Big Picture</option>
-        <option value="Wedding Party">💒 Wedding Party</option>
-        <option value="Lexi Bachelorette Party">🥂 Lexi Bachelorette Party</option>
-        <option value="Eddy Bachelor Party">🍻 Eddy Bachelor Party</option>
-        <option value="Hotel Block Prep">🏨 Hotel Block Prep</option>
-        <option value="St. Agnes Prep Steps">⛪ St. Agnes Prep Steps</option>
-        <option value="Rusty Pelican Prep Steps">🍽️ Rusty Pelican Prep Steps</option>
-        <option value="Transportation Prep">🚌 Transportation Prep</option>
-        <option value="DJ Prep">🎶 DJ Prep</option>
-        <option value="After Party Prep">🎉 After Party Prep</option>
-        <option value="January 29th, 2027 — Rehearsal Dinner!">🕯️ Rehearsal Dinner</option>
-        <option value="January 30th, 2027 — Wedding Day!">💍 Wedding Day</option>
-        <option value="Other">📋 Other</option>
-      </select>
-      <select class="modal-select" id="add-owner">
-        <option value="">No owner</option>
-        <option value="Lexi">Lexi</option>
-        <option value="Eddy">Eddy</option>
-        <option value="Lexi+Eddy">Both</option>
-      </select>
+    <div class="modal-title">Manage Categories</div>
+    <div class="cat-list" id="cat-list"></div>
+    <div class="add-cat-row">
+      <input type="text" class="add-cat-icon" id="new-cat-icon" placeholder="📋" maxlength="2">
+      <input type="text" class="add-cat-name" id="new-cat-name" placeholder="New category name…" maxlength="60">
+      <button class="add-cat-btn" onclick="addCategory()">Add</button>
     </div>
-    <div class="modal-row">
-      <div style="flex:1">
-        <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:4px;">Due Date</label>
-        <input type="date" class="modal-select" id="add-due" style="width:100%">
-      </div>
-    </div>
-    <div class="modal-actions">
-      <button class="btn-cancel" onclick="closeAdd()">Cancel</button>
-      <button class="btn-save" onclick="addTask()">Add Task</button>
+    <div class="modal-actions" style="margin-top:10px">
+      <button class="btn-cancel" onclick="closeManage()">Done</button>
     </div>
   </div>
 </div>
+
+<!-- Edit Category Modal -->
+<div class="modal-overlay" id="edit-cat-modal">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Edit Category</div>
+    <div class="modal-row">
+      <input type="text" class="modal-select" id="edit-cat-icon" placeholder="📋" maxlength="2" style="flex:0 0 60px; text-align:center; font-size:20px;">
+      <input type="text" class="modal-select" id="edit-cat-name" placeholder="Category name" maxlength="60" style="flex:1">
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeEditCat()">Cancel</button>
+      <button class="btn-save" onclick="saveEditCat()">Save</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
 
 <script type="module">
   // ── REPLACE WITH YOUR FIREBASE CONFIG ──
@@ -348,57 +293,51 @@
 
   const USE_LOCAL = firebaseConfig.apiKey === "YOUR_API_KEY";
 
-  let db, tasksRef, addDoc, updateDoc, deleteDoc, doc, serverTimestamp, writeBatch, onSnapshot, query, orderBy, collection;
+  let db, tasksRef, catsRef, addDoc, updateDoc, deleteDoc, doc, serverTimestamp,
+      writeBatch, onSnapshot, query, orderBy, collection, getDocs, setDoc, getDoc;
 
   if (!USE_LOCAL) {
     const fb = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js");
     const fs = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
     const app = fb.initializeApp(firebaseConfig);
     db = fs.getFirestore(app);
-    ({ addDoc, updateDoc, deleteDoc, doc, serverTimestamp, writeBatch, onSnapshot, query, orderBy, collection } = fs);
+    ({ addDoc, updateDoc, deleteDoc, doc, serverTimestamp, writeBatch,
+       onSnapshot, query, orderBy, collection, getDocs, setDoc, getDoc } = fs);
     tasksRef = collection(db, "wedding/tasks/items");
+    catsRef  = collection(db, "wedding/config/categories");
   }
 
-  // ── LOCAL STORAGE HELPERS (used when Firebase not configured) ──
-  const LS_KEY = 'wedding_tasks_local';
-  function lsLoad() { try { return JSON.parse(localStorage.getItem(LS_KEY)) || []; } catch { return []; } }
-  function lsSave(tasks) { localStorage.setItem(LS_KEY, JSON.stringify(tasks)); }
-  function lsNotify() {
-    allTasks = lsLoad();
-    const banner = document.getElementById('seed-banner');
-    banner.style.display = allTasks.length === 0 ? 'flex' : 'none';
-    render();
-  }
+  // ── LOCAL HELPERS ──
+  const LS_TASKS = 'wedding_tasks_local';
+  const LS_CATS  = 'wedding_cats_local';
+  function lsLoadTasks() { try { return JSON.parse(localStorage.getItem(LS_TASKS)) || []; } catch { return []; } }
+  function lsSaveTasks(t) { localStorage.setItem(LS_TASKS, JSON.stringify(t)); }
+  function lsLoadCats()  { try { return JSON.parse(localStorage.getItem(LS_CATS))  || []; } catch { return []; } }
+  function lsSaveCats(c) { localStorage.setItem(LS_CATS, JSON.stringify(c)); }
 
   let allTasks = [];
+  let allCategories = []; // [{ id, name, icon, order }]
   let currentFilter = 'all';
   let editingId = null;
+  let editingCatId = null;
 
-  const CATEGORIES = {
-    "Big Picture": "🌟",
-    "Wedding Party": "💒",
-    "Lexi Bachelorette Party": "🥂",
-    "Eddy Bachelor Party": "🍻",
-    "Hotel Block Prep": "🏨",
-    "St. Agnes Prep Steps": "⛪",
-    "Rusty Pelican Prep Steps": "🍽️",
-    "Transportation Prep": "🚌",
-    "DJ Prep": "🎶",
-    "After Party Prep": "🎉",
-    "January 29th, 2027 — Rehearsal Dinner!": "🕯️",
-    "January 30th, 2027 — Wedding Day!": "💍",
-    "Other": "📋"
-  };
-
-  const CAT_ORDER = [
-    "Big Picture","Wedding Party",
-    "Lexi Bachelorette Party","Eddy Bachelor Party","Hotel Block Prep",
-    "St. Agnes Prep Steps","Rusty Pelican Prep Steps",
-    "Transportation Prep","DJ Prep","After Party Prep",
-    "January 29th, 2027 — Rehearsal Dinner!","January 30th, 2027 — Wedding Day!","Other"
+  // ── DEFAULT CATEGORIES (used for first-time seed) ──
+  const DEFAULT_CATS = [
+    { name: "Big Picture",                          icon: "🌟", order: 1  },
+    { name: "Wedding Party",                        icon: "💒", order: 2  },
+    { name: "Lexi Bachelorette Party",              icon: "🥂", order: 3  },
+    { name: "Eddy Bachelor Party",                  icon: "🍻", order: 4  },
+    { name: "Hotel Block Prep",                     icon: "🏨", order: 5  },
+    { name: "St. Agnes Prep Steps",                 icon: "⛪", order: 6  },
+    { name: "Rusty Pelican Prep Steps",             icon: "🍽️", order: 7  },
+    { name: "Transportation Prep",                  icon: "🚌", order: 8  },
+    { name: "DJ Prep",                              icon: "🎶", order: 9  },
+    { name: "After Party Prep",                     icon: "🎉", order: 10 },
+    { name: "January 29th, 2027 — Rehearsal Dinner!", icon: "🕯️", order: 11 },
+    { name: "January 30th, 2027 — Wedding Day!",    icon: "💍", order: 12 },
   ];
 
-  // Seed data from spreadsheet
+  // ── SEED TASKS ──
   const SEED_TASKS = [
     {text:"Choose Venue",category:"Big Picture",done:true,due:null,completed:"2025-12-01",owner:"Lexi+Eddy",details:"Rusty Pelican"},
     {text:"Choose Date",category:"Big Picture",done:true,due:null,completed:"2025-12-01",owner:"Lexi+Eddy",details:"January 30th, 2027"},
@@ -446,10 +385,9 @@
     {text:"After Party",category:"January 30th, 2027 — Wedding Day!",done:false,due:"2027-01-30",owner:null,details:null},
   ];
 
-  // COUNTDOWN
+  // ── COUNTDOWN ──
   function updateCountdown() {
-    const wedding = new Date('2027-01-30T12:00:00');
-    const diff = wedding - new Date();
+    const diff = new Date('2027-01-30T12:00:00') - new Date();
     if (diff <= 0) { document.getElementById('cd-days').textContent = '🎉'; return; }
     document.getElementById('cd-days').textContent = Math.floor(diff/86400000);
     document.getElementById('cd-hours').textContent = String(Math.floor((diff%86400000)/3600000)).padStart(2,'0');
@@ -458,179 +396,296 @@
   updateCountdown();
   setInterval(updateCountdown, 30000);
 
-  // Set sticky top offset for filter rows
+  // ── STICKY OFFSETS ──
   function setStickyTop() {
-    const heroH = document.querySelector('.hero').offsetHeight;
+    const heroH    = document.querySelector('.hero').offsetHeight;
     const progressH = document.querySelector('.progress-wrap').offsetHeight;
-    const filterH = document.querySelector('.filter-sticky').offsetHeight;
-    document.documentElement.style.setProperty('--hero-h', heroH + 'px');
+    const filterH  = document.querySelector('.filter-sticky').offsetHeight;
+    document.documentElement.style.setProperty('--hero-h',     heroH + 'px');
     document.documentElement.style.setProperty('--filter-top', (heroH + progressH) + 'px');
-    document.documentElement.style.setProperty('--section-top', (heroH + progressH + filterH) + 'px');
+    document.documentElement.style.setProperty('--section-top',(heroH + progressH + filterH) + 'px');
     window._stickyOffset = heroH + progressH + filterH + 8;
   }
   setStickyTop();
   window.addEventListener('resize', setStickyTop);
 
-  // START LISTENER
-  if (USE_LOCAL) {
-    lsNotify();
-  } else {
-    const q = query(tasksRef, orderBy('createdAt','asc'));
-    onSnapshot(q, (snap) => {
-      allTasks = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-      const banner = document.getElementById('seed-banner');
-      banner.style.display = allTasks.length === 0 ? 'flex' : 'none';
-      render();
-    });
+  // ── POPULATE CATEGORY DROPDOWNS ──
+  function buildCategoryOptions(selectId, selectedValue) {
+    const sel = document.getElementById(selectId);
+    sel.innerHTML = allCategories.map(c =>
+      `<option value="${escHtml(c.name)}" ${c.name === selectedValue ? 'selected' : ''}>${c.icon} ${escHtml(c.name)}</option>`
+    ).join('');
   }
 
-  // RENDER
+  // ── INIT: LOAD CATEGORIES THEN TASKS ──
+  async function init() {
+    if (USE_LOCAL) {
+      let cats = lsLoadCats();
+      if (cats.length === 0) {
+        cats = DEFAULT_CATS.map((c, i) => ({ ...c, id: 'lcat_' + i }));
+        lsSaveCats(cats);
+      }
+      allCategories = cats;
+      renderCatManager();
+      const tasks = lsLoadTasks();
+      allTasks = tasks;
+      document.getElementById('seed-banner').style.display = tasks.length === 0 ? 'flex' : 'none';
+      render();
+    } else {
+      // Load categories first
+      const catSnap = await getDocs(query(catsRef, orderBy('order', 'asc')));
+      if (catSnap.empty) {
+        // First time — seed categories
+        const batch = writeBatch(db);
+        DEFAULT_CATS.forEach(c => {
+          const ref = doc(catsRef);
+          batch.set(ref, c);
+        });
+        await batch.commit();
+        // Re-fetch
+        const snap2 = await getDocs(query(catsRef, orderBy('order', 'asc')));
+        allCategories = snap2.docs.map(d => ({ id: d.id, ...d.data() }));
+      } else {
+        allCategories = catSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+      }
+      renderCatManager();
+
+      // Live listen to categories
+      onSnapshot(query(catsRef, orderBy('order', 'asc')), snap => {
+        allCategories = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        renderCatManager();
+        render();
+      });
+
+      // Live listen to tasks
+      onSnapshot(query(tasksRef, orderBy('createdAt', 'asc')), snap => {
+        allTasks = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        document.getElementById('seed-banner').style.display = allTasks.length === 0 ? 'flex' : 'none';
+        render();
+      });
+    }
+  }
+  init();
+
+  // ── RENDER TASKS ──
   function render() {
     const today = new Date(); today.setHours(0,0,0,0);
     const filtered = allTasks.filter(t => {
-      if (currentFilter === 'done') return t.done;
-      if (currentFilter === 'todo') return !t.done;
-      if (currentFilter === 'lexi') return !t.done && t.owner && t.owner.toLowerCase().includes('lexi');
-      if (currentFilter === 'eddy') return !t.done && t.owner && t.owner.toLowerCase().includes('eddy');
+      if (currentFilter === 'done')  return t.done;
+      if (currentFilter === 'todo')  return !t.done;
+      if (currentFilter === 'lexi')  return !t.done && t.owner && t.owner.toLowerCase().includes('lexi');
+      if (currentFilter === 'eddy')  return !t.done && t.owner && t.owner.toLowerCase().includes('eddy');
       return true;
     });
 
     const total = allTasks.length;
-    const done = allTasks.filter(t=>t.done).length;
-    const pct = total ? Math.round(done/total*100) : 0;
-    document.getElementById('progress-bar').style.width = pct+'%';
+    const done  = allTasks.filter(t => t.done).length;
+    const pct   = total ? Math.round(done/total*100) : 0;
+    document.getElementById('progress-bar').style.width = pct + '%';
     document.getElementById('progress-label').textContent = `${done} / ${total} done`;
 
     const container = document.getElementById('task-list');
     if (filtered.length === 0) {
-      const msg = total === 0 ? 'Your list is empty — import or add your first task!' : 'Nothing here.';
-      container.innerHTML = `<div class="empty-state"><div class="empty-state-icon">${total===0?'💍':'✅'}</div><p>${msg}</p></div>`;
-      return;
+      container.innerHTML = `<div class="empty-state"><div class="empty-state-icon">${total===0?'💍':'✅'}</div><p>${total===0?'Import or add your first task!':'Nothing here.'}</p></div>`;
+    } else {
+      // Group by category
+      const groups = {};
+      allCategories.forEach(c => groups[c.name] = []);
+      filtered.forEach(t => {
+        const cat = t.category || 'Other';
+        if (!groups[cat]) groups[cat] = [];
+        groups[cat].push(t);
+      });
+
+      // Sort within each group
+      function sortTasks(tasks) {
+        const done = tasks.filter(t=>t.done).sort((a,b) => {
+          if (!a.completed && !b.completed) return 0;
+          if (!a.completed) return -1;
+          if (!b.completed) return 1;
+          return a.completed.localeCompare(b.completed);
+        });
+        const todo = tasks.filter(t=>!t.done).sort((a,b) => {
+          if (!a.due && !b.due) return 0;
+          if (!a.due) return 1;
+          if (!b.due) return -1;
+          return a.due.localeCompare(b.due);
+        });
+        return [...done, ...todo];
+      }
+
+      let html = '';
+      for (const cat of allCategories) {
+        const tasks = sortTasks(groups[cat.name] || []);
+        if (!tasks.length) continue;
+        const remaining = tasks.filter(t=>!t.done).length;
+        const catId = 'cat-' + cat.name.replace(/[^a-zA-Z0-9]/g,'-');
+        html += `<div class="category-group" id="${catId}">
+          <div class="category-header">
+            <span class="category-icon">${cat.icon}</span>
+            <span class="category-name">${escHtml(cat.name)}</span>
+            <span class="category-count">${remaining > 0 ? remaining+' left' : '✓ done'}</span>
+          </div>`;
+        tasks.forEach(t => {
+          let metaHtml = '';
+          if (t.due) {
+            const d = new Date(t.due+'T00:00:00');
+            const isOverdue = !t.done && d < today;
+            const label = d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+            metaHtml += `<span class="task-due${isOverdue?' overdue':''}">${isOverdue?'⚠️ ':'📅 '}Due ${label}</span>`;
+          }
+          if (t.completed) {
+            const c = new Date(t.completed+'T00:00:00');
+            metaHtml += `<span class="task-completed">✅ Completed ${c.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}</span>`;
+          }
+          if (t.owner) {
+            const o = t.owner.toLowerCase();
+            const cls = o.includes('lexi') && o.includes('eddy') ? 'owner-both' : o.includes('lexi') ? 'owner-lexi' : 'owner-eddy';
+            const label = (o.includes('lexi') && o.includes('eddy')) ? 'Both' : t.owner.replace('Lexi + Eddy','Both').replace('Lexi+Eddy','Both');
+            metaHtml += `<span class="task-owner ${cls}">${label}</span>`;
+          }
+          html += `<div class="task-card${t.done?' done':''}" onclick="openEdit('${t.id}')">
+            <div class="task-checkbox${t.done?' checked':''}" onclick="event.stopPropagation();toggleTask('${t.id}',${t.done})"></div>
+            <div class="task-body">
+              <div class="task-text">${escHtml(t.text)}</div>
+              ${metaHtml ? `<div class="task-meta">${metaHtml}</div>` : ''}
+              ${t.details ? `<div class="task-details">${escHtml(t.details)}</div>` : ''}
+            </div>
+            <button class="task-delete" onclick="event.stopPropagation();deleteTask('${t.id}')" title="Delete">×</button>
+          </div>`;
+        });
+        html += '</div>';
+      }
+      container.innerHTML = html;
     }
 
-    // Group by category in defined order
-    const groups = {};
-    CAT_ORDER.forEach(c => groups[c] = []);
-    filtered.forEach(t => {
-      const cat = t.category || 'Other';
-      if (!groups[cat]) groups[cat] = [];
-      groups[cat].push(t);
-    });
-
-    // Sort each group:
-    // Done tasks first sorted by completed date (no date → top, then earliest → latest)
-    // Then incomplete tasks sorted by due date (no date → bottom, then earliest → latest)
-    function sortTasks(tasks) {
-      const done = tasks.filter(t => t.done).sort((a, b) => {
-        if (!a.completed && !b.completed) return 0;
-        if (!a.completed) return -1;
-        if (!b.completed) return 1;
-        return a.completed.localeCompare(b.completed);
-      });
-      const todo = tasks.filter(t => !t.done).sort((a, b) => {
-        if (!a.due && !b.due) return 0;
-        if (!a.due) return 1;
-        if (!b.due) return -1;
-        return a.due.localeCompare(b.due);
-      });
-      return [...done, ...todo];
-    }
-
-    let html = '';
-    for (const cat of CAT_ORDER) {
-      const tasks = sortTasks(groups[cat] || []);
-      if (!tasks || tasks.length === 0) continue;
-      const icon = CATEGORIES[cat] || '📋';
-      const remaining = tasks.filter(t=>!t.done).length;
-      html += `<div class="category-group" id="cat-${cat.replace(/[^a-zA-Z0-9]/g,'-')}">
-        <div class="category-header">
-          <span class="category-icon">${icon}</span>
-          <span class="category-name">${cat}</span>
-          <span class="category-count">${remaining > 0 ? remaining+' left' : '✓ done'}</span>
-        </div>`;
-      tasks.forEach(t => {
-        let metaHtml = '';
-        if (t.due) {
-          const d = new Date(t.due+'T00:00:00');
-          const isOverdue = !t.done && d < today;
-          const label = d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
-          metaHtml += `<span class="task-due${isOverdue?' overdue':''}">${isOverdue?'⚠️ ':'📅 '}Due ${label}</span>`;
-        }
-        if (t.completed) {
-          const c = new Date(t.completed+'T00:00:00');
-          const label = c.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
-          metaHtml += `<span class="task-completed">✅ Completed ${label}</span>`;
-        }
-        if (t.owner) {
-          const o = t.owner.toLowerCase();
-          const cls = o.includes('lexi') && o.includes('eddy') ? 'owner-both' : o.includes('lexi') ? 'owner-lexi' : 'owner-eddy';
-          const label = (o.includes('lexi') && o.includes('eddy')) ? 'Both' : t.owner.replace('Lexi + Eddy','Both').replace('Lexi+Eddy','Both');
-          metaHtml += `<span class="task-owner ${cls}">${label}</span>`;
-        }
-        const hasMeta = metaHtml.length > 0;
-        const hasDetails = t.details;
-        html += `<div class="task-card${t.done?' done':''}" onclick="openEdit('${t.id}')">
-          <div class="task-checkbox${t.done?' checked':''}" onclick="event.stopPropagation();toggleTask('${t.id}',${t.done})"></div>
-          <div class="task-body">
-            <div class="task-text">${escHtml(t.text)}</div>
-            ${hasMeta ? `<div class="task-meta">${metaHtml}</div>` : ''}
-            ${hasDetails ? `<div class="task-details">${escHtml(t.details)}</div>` : ''}
-          </div>
-          <button class="task-delete" onclick="event.stopPropagation();deleteTask('${t.id}')" title="Delete">×</button>
-        </div>`;
-      });
-      html += '</div>';
-    }
-    container.innerHTML = html;
-
-    // Rebuild category nav chips based on what's visible
+    // Rebuild category nav chips
     const nav = document.getElementById('category-nav');
     nav.innerHTML = '';
-    for (const cat of CAT_ORDER) {
-      if (!groups[cat] || groups[cat].length === 0) continue;
-      const icon = CATEGORIES[cat] || '📋';
+    const groups2 = {};
+    filtered.forEach(t => { const c = t.category||'Other'; groups2[c] = true; });
+    allCategories.forEach(cat => {
+      if (!groups2[cat.name]) return;
       const chip = document.createElement('div');
       chip.className = 'filter-chip cat-nav-chip';
-      chip.textContent = icon + ' ' + cat;
+      chip.textContent = cat.icon + ' ' + cat.name;
       chip.onclick = () => {
-        // Tap flash
         chip.classList.add('tapped');
         setTimeout(() => chip.classList.remove('tapped'), 300);
-
-        const el = document.getElementById('cat-' + cat.replace(/[^a-zA-Z0-9]/g, '-'));
+        const el = document.getElementById('cat-' + cat.name.replace(/[^a-zA-Z0-9]/g,'-'));
         if (el) {
-          const heroH = document.querySelector('.hero').offsetHeight;
+          const heroH    = document.querySelector('.hero').offsetHeight;
           const progressH = document.querySelector('.progress-wrap').offsetHeight;
-          const filterH = document.querySelector('.filter-sticky').offsetHeight;
-          const offset = heroH + progressH + filterH + 8;
-          const top = el.getBoundingClientRect().top + window.scrollY - offset;
-          window.scrollTo({ top, behavior: 'smooth' });
+          const filterH  = document.querySelector('.filter-sticky').offsetHeight;
+          const offset   = heroH + progressH + filterH + 8;
+          window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - offset, behavior: 'smooth' });
         }
       };
       nav.appendChild(chip);
-    }
-    // Recalculate offset now that category nav is populated
-    setStickyTop();
+    });
 
-    // Update category nav fade indicators
+    // Scroll fade
     const navEl = document.getElementById('category-nav');
-    const wrap = navEl.parentElement;
+    const wrap  = navEl.parentElement;
     function updateFade() {
-      const atStart = navEl.scrollLeft <= 2;
-      const atEnd = navEl.scrollLeft >= navEl.scrollWidth - navEl.clientWidth - 2;
-      wrap.classList.toggle('at-start', atStart);
-      wrap.classList.toggle('at-end', atEnd);
-      wrap.classList.toggle('scrollable', navEl.scrollLeft > 2);
+      wrap.classList.toggle('at-start',  navEl.scrollLeft <= 2);
+      wrap.classList.toggle('at-end',    navEl.scrollLeft >= navEl.scrollWidth - navEl.clientWidth - 2);
+      wrap.classList.toggle('scrollable',navEl.scrollLeft > 2);
     }
     navEl.removeEventListener('scroll', updateFade);
     navEl.addEventListener('scroll', updateFade, { passive: true });
     setTimeout(updateFade, 50);
+
+    setStickyTop();
   }
 
-  function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  // ── CATEGORY MANAGER ──
+  function renderCatManager() {
+    const list = document.getElementById('cat-list');
+    if (!list) return;
+    list.innerHTML = allCategories.map(c => `
+      <div class="cat-item">
+        <span class="cat-item-icon" title="Click to edit">${c.icon}</span>
+        <span class="cat-item-name">${escHtml(c.name)}</span>
+        <button class="cat-item-edit" onclick="openEditCat('${c.id}')">Edit</button>
+        <button class="cat-item-delete" onclick="deleteCategory('${c.id}','${escHtml(c.name)}')" title="Delete">×</button>
+      </div>`).join('');
+  }
 
-  // ACTIONS
+  window.openManage = function() {
+    renderCatManager();
+    document.getElementById('manage-modal').classList.add('open');
+  };
+  window.closeManage = function() {
+    document.getElementById('manage-modal').classList.remove('open');
+  };
+
+  window.addCategory = async function() {
+    const icon = document.getElementById('new-cat-icon').value.trim() || '📋';
+    const name = document.getElementById('new-cat-name').value.trim();
+    if (!name) return;
+    const order = allCategories.length ? Math.max(...allCategories.map(c=>c.order)) + 1 : 1;
+    if (USE_LOCAL) {
+      const cats = lsLoadCats();
+      cats.push({ id: 'lcat_'+Date.now(), name, icon, order });
+      lsSaveCats(cats);
+      allCategories = cats;
+      renderCatManager();
+      render();
+    } else {
+      await addDoc(catsRef, { name, icon, order });
+    }
+    document.getElementById('new-cat-icon').value = '';
+    document.getElementById('new-cat-name').value = '';
+    showToast('Category added');
+  };
+
+  window.deleteCategory = async function(id, name) {
+    if (!confirm(`Delete "${name}"? Tasks in this category won't be deleted but will lose their category.`)) return;
+    if (USE_LOCAL) {
+      lsSaveCats(lsLoadCats().filter(c => c.id !== id));
+      allCategories = lsLoadCats();
+      renderCatManager();
+      render();
+    } else {
+      await deleteDoc(doc(db, 'wedding/config/categories', id));
+    }
+    showToast('Category deleted');
+  };
+
+  window.openEditCat = function(id) {
+    const cat = allCategories.find(c => c.id === id);
+    if (!cat) return;
+    editingCatId = id;
+    document.getElementById('edit-cat-icon').value = cat.icon;
+    document.getElementById('edit-cat-name').value = cat.name;
+    document.getElementById('edit-cat-modal').classList.add('open');
+  };
+  window.closeEditCat = function() {
+    editingCatId = null;
+    document.getElementById('edit-cat-modal').classList.remove('open');
+  };
+  window.saveEditCat = async function() {
+    if (!editingCatId) return;
+    const icon = document.getElementById('edit-cat-icon').value.trim() || '📋';
+    const name = document.getElementById('edit-cat-name').value.trim();
+    if (!name) return;
+    if (USE_LOCAL) {
+      const cats = lsLoadCats().map(c => c.id === editingCatId ? { ...c, name, icon } : c);
+      lsSaveCats(cats);
+      allCategories = cats;
+      renderCatManager();
+      render();
+    } else {
+      await updateDoc(doc(db, 'wedding/config/categories', editingCatId), { name, icon });
+    }
+    closeEditCat();
+    showToast('Category updated');
+  };
+
+  // ── TASK ACTIONS ──
   window.openAdd = function() {
+    buildCategoryOptions('add-category', allCategories[0]?.name);
     document.getElementById('add-text').value = '';
     document.getElementById('add-details').value = '';
     document.getElementById('add-due').value = '';
@@ -638,10 +693,7 @@
     document.getElementById('add-modal').classList.add('open');
     setTimeout(() => document.getElementById('add-text').focus(), 100);
   };
-
-  window.closeAdd = function() {
-    document.getElementById('add-modal').classList.remove('open');
-  };
+  window.closeAdd = function() { document.getElementById('add-modal').classList.remove('open'); };
 
   window.addTask = async function() {
     const text = document.getElementById('add-text').value.trim();
@@ -649,18 +701,19 @@
     const task = {
       text,
       category: document.getElementById('add-category').value,
-      owner: document.getElementById('add-owner').value || null,
-      due: document.getElementById('add-due').value || null,
-      details: document.getElementById('add-details').value.trim() || null,
+      owner:    document.getElementById('add-owner').value || null,
+      due:      document.getElementById('add-due').value || null,
+      details:  document.getElementById('add-details').value.trim() || null,
       done: false,
     };
     if (USE_LOCAL) {
-      const tasks = lsLoad();
+      const tasks = lsLoadTasks();
       task.id = 'local_' + Date.now();
       task.createdAt = Date.now();
       tasks.push(task);
-      lsSave(tasks);
-      lsNotify();
+      lsSaveTasks(tasks);
+      allTasks = tasks;
+      render();
     } else {
       await addDoc(tasksRef, { ...task, createdAt: serverTimestamp() });
     }
@@ -671,8 +724,8 @@
   window.toggleTask = async function(id, current) {
     const updates = { done: !current };
     if (USE_LOCAL) {
-      const tasks = lsLoad().map(t => t.id === id ? { ...t, ...updates } : t);
-      lsSave(tasks); lsNotify();
+      const tasks = lsLoadTasks().map(t => t.id === id ? { ...t, ...updates } : t);
+      lsSaveTasks(tasks); allTasks = tasks; render();
     } else {
       await updateDoc(doc(db,'wedding/tasks/items',id), updates);
     }
@@ -681,7 +734,8 @@
   window.deleteTask = async function(id) {
     if (!confirm('Remove this task?')) return;
     if (USE_LOCAL) {
-      lsSave(lsLoad().filter(t => t.id !== id)); lsNotify();
+      const tasks = lsLoadTasks().filter(t => t.id !== id);
+      lsSaveTasks(tasks); allTasks = tasks; render();
     } else {
       await deleteDoc(doc(db,'wedding/tasks/items',id));
     }
@@ -695,42 +749,36 @@
     render();
   };
 
-  // SEED
   window.seedTasks = async function() {
-    document.getElementById('seed-banner').innerHTML = '<span>Importing 44 tasks…</span>';
+    document.getElementById('seed-banner').innerHTML = '<span>Importing tasks…</span>';
     if (USE_LOCAL) {
-      const tasks = SEED_TASKS.map((t, i) => ({ ...t, id: 'local_' + (Date.now() + i), createdAt: Date.now() + i }));
-      lsSave(tasks); lsNotify();
+      const tasks = SEED_TASKS.map((t,i) => ({ ...t, id:'local_'+(Date.now()+i), createdAt: Date.now()+i }));
+      lsSaveTasks(tasks); allTasks = tasks; render();
     } else {
       const batch = writeBatch(db);
-      let t = Date.now();
+      const t = Date.now();
       SEED_TASKS.forEach((task, i) => {
         const ref = doc(tasksRef);
-        batch.set(ref, { ...task, createdAt: { seconds: Math.floor((t + i*100)/1000), nanoseconds: 0 } });
+        batch.set(ref, { ...task, createdAt: { seconds: Math.floor((t+i*100)/1000), nanoseconds: 0 } });
       });
       await batch.commit();
     }
-    showToast('44 tasks imported! 🎉');
+    showToast('Tasks imported! 🎉');
   };
 
-  // EDIT
   window.openEdit = function(id) {
-    const t = allTasks.find(x=>x.id===id);
+    const t = allTasks.find(x => x.id === id);
     if (!t) return;
     editingId = id;
-    document.getElementById('edit-text').value = t.text;
-    document.getElementById('edit-details').value = t.details || '';
-    document.getElementById('edit-category').value = t.category || 'Other';
-    document.getElementById('edit-owner').value = t.owner || '';
-    document.getElementById('edit-due').value = t.due || '';
+    buildCategoryOptions('edit-category', t.category);
+    document.getElementById('edit-text').value      = t.text;
+    document.getElementById('edit-details').value   = t.details || '';
+    document.getElementById('edit-owner').value     = t.owner || '';
+    document.getElementById('edit-due').value       = t.due || '';
     document.getElementById('edit-completed').value = t.completed || '';
     document.getElementById('edit-modal').classList.add('open');
   };
-
-  window.closeEdit = function() {
-    editingId = null;
-    document.getElementById('edit-modal').classList.remove('open');
-  };
+  window.closeEdit = function() { editingId = null; document.getElementById('edit-modal').classList.remove('open'); };
 
   window.saveEdit = async function() {
     if (!editingId) return;
@@ -738,15 +786,15 @@
     if (!text) return;
     const updates = {
       text,
-      details: document.getElementById('edit-details').value.trim() || null,
-      category: document.getElementById('edit-category').value,
-      owner: document.getElementById('edit-owner').value || null,
-      due: document.getElementById('edit-due').value || null,
+      details:   document.getElementById('edit-details').value.trim() || null,
+      category:  document.getElementById('edit-category').value,
+      owner:     document.getElementById('edit-owner').value || null,
+      due:       document.getElementById('edit-due').value || null,
       completed: document.getElementById('edit-completed').value || null,
     };
     if (USE_LOCAL) {
-      const tasks = lsLoad().map(t => t.id === editingId ? { ...t, ...updates } : t);
-      lsSave(tasks); lsNotify();
+      const tasks = lsLoadTasks().map(t => t.id === editingId ? { ...t, ...updates } : t);
+      lsSaveTasks(tasks); allTasks = tasks; render();
     } else {
       await updateDoc(doc(db,'wedding/tasks/items',editingId), updates);
     }
@@ -754,51 +802,50 @@
     showToast('Saved');
   };
 
-  // Swipe down to close (applies to all modal sheets)
-  (function() {
-    document.querySelectorAll('.modal-sheet').forEach(sheet => {
+  // ── SWIPE TO CLOSE ALL MODALS ──
+  document.querySelectorAll('.modal-sheet').forEach(sheet => {
     let startY = 0, currentY = 0, dragging = false;
-
-    sheet.addEventListener('touchstart', function(e) {
-      // Only initiate drag from the handle area (top 40px of sheet)
+    sheet.addEventListener('touchstart', e => {
       if (e.target.closest('.modal-handle') || e.touches[0].clientY - sheet.getBoundingClientRect().top < 40) {
-        startY = e.touches[0].clientY;
-        dragging = true;
-        sheet.style.transition = 'none';
+        startY = e.touches[0].clientY; dragging = true; sheet.style.transition = 'none';
       }
     }, { passive: true });
-
-    sheet.addEventListener('touchmove', function(e) {
+    sheet.addEventListener('touchmove', e => {
       if (!dragging) return;
       currentY = e.touches[0].clientY;
-      const delta = Math.max(0, currentY - startY);
-      sheet.style.transform = `translateY(${delta}px)`;
+      sheet.style.transform = `translateY(${Math.max(0, currentY - startY)}px)`;
     }, { passive: true });
-
-    sheet.addEventListener('touchend', function() {
+    sheet.addEventListener('touchend', () => {
       if (!dragging) return;
       dragging = false;
       sheet.style.transition = 'transform 0.25s ease';
-      const delta = currentY - startY;
-      if (delta > 80) {
+      if (currentY - startY > 80) {
         sheet.style.transform = 'translateY(100%)';
-        const overlay = sheet.closest('.modal-overlay');
+        const id = sheet.closest('.modal-overlay').id;
         setTimeout(() => {
           sheet.style.transform = '';
-          if (overlay.id === 'add-modal') closeAdd();
-          else closeEdit();
+          if (id === 'add-modal') closeAdd();
+          else if (id === 'edit-modal') closeEdit();
+          else if (id === 'manage-modal') closeManage();
+          else if (id === 'edit-cat-modal') closeEditCat();
         }, 250);
-      } else {
-        sheet.style.transform = '';
+      } else { sheet.style.transform = ''; }
+    });
+  });
+
+  ['edit-modal','add-modal','manage-modal','edit-cat-modal'].forEach(id => {
+    document.getElementById(id).addEventListener('click', function(e) {
+      if (e.target === this) {
+        if (id === 'add-modal') closeAdd();
+        else if (id === 'edit-modal') closeEdit();
+        else if (id === 'manage-modal') closeManage();
+        else if (id === 'edit-cat-modal') closeEditCat();
       }
     });
-    });
-  })();
+  });
 
-  document.getElementById('edit-modal').addEventListener('click', function(e) { if (e.target===this) closeEdit(); });
-  document.getElementById('add-modal').addEventListener('click', function(e) { if (e.target===this) closeAdd(); });
+  function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
-  // TOAST
   function showToast(msg) {
     const t = document.getElementById('toast');
     t.textContent = msg;
