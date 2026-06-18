@@ -425,21 +425,23 @@
   // Finds tasks whose category doesn't match any known category and tries to auto-fix.
   // Matching logic: case-insensitive substring match in either direction.
   async function migrateMismatchedCategories() {
+    if (!allCategories.length || !allTasks.length) return;
     const knownNames = allCategories.map(c => c.name);
     const mismatched = allTasks.filter(t =>
       t.category !== '__deleted__' && !knownNames.includes(t.category)
     );
+    console.log('Migration check — mismatched tasks:', mismatched.map(t => t.category));
     if (mismatched.length === 0) return;
 
     const batch = writeBatch(db);
     let fixed = 0;
     mismatched.forEach(t => {
-      const tCat = t.category?.toLowerCase() || '';
-      // Try to find a category that contains or is contained by the task's category
+      const tCat = (t.category || '').toLowerCase().trim();
       const match = allCategories.find(c => {
-        const cName = c.name.toLowerCase();
-        return cName.includes(tCat) || tCat.includes(cName);
+        const cName = c.name.toLowerCase().trim();
+        return cName === tCat || cName.includes(tCat) || tCat.includes(cName);
       });
+      console.log(`Task "${t.text}" cat="${t.category}" → match: ${match?.name || 'NONE'}`);
       if (match) {
         batch.update(doc(db, 'wedding/tasks/items', t.id), { category: match.name });
         fixed++;
@@ -447,9 +449,9 @@
     });
     if (fixed > 0) {
       await batch.commit();
-      console.log(`Migrated ${fixed} task(s) to matching categories`);
+      console.log(`✓ Migrated ${fixed} task(s)`);
+      showToast(`Fixed ${fixed} task categories`);
     }
-    // Any still unmatched after this will just not appear — user can fix via edit
   }
 
   // ── INIT: LOAD CATEGORIES THEN TASKS ──
