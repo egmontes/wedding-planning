@@ -80,10 +80,21 @@
   .filter-row::-webkit-scrollbar { display: none; }
   .filter-chip { background: var(--ivory-dark); border: 1.5px solid var(--border); border-radius: 20px; padding: 6px 13px; font-size: 13px; font-family: 'DM Sans', sans-serif; color: var(--text-muted); cursor: pointer; white-space: nowrap; transition: all 0.15s; flex-shrink: 0; }
   .filter-chip.active { background: var(--navy); border-color: var(--navy); color: white; }
+  .filter-chip.tapped { background: var(--rose); border-color: var(--rose); color: white; transform: scale(0.93); transition: transform 0.1s ease, background 0.1s ease; }
 
   /* CATEGORY GROUP */
   .category-group { margin-bottom: 18px; }
-  .category-header { display: flex; align-items: center; gap: 8px; margin-bottom: 9px; padding: 0 2px; }
+  .category-header {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 9px; padding: 6px 2px 6px;
+    position: sticky;
+    top: var(--section-top, 0px);
+    background: var(--ivory);
+    z-index: 80;
+    margin-left: -14px;
+    margin-right: -14px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
   .category-icon { font-size: 15px; }
   .category-name { font-family: 'Cormorant Garant', serif; font-size: 18px; font-weight: 600; color: var(--text); font-style: italic; flex: 1; }
   .category-count { font-size: 11px; color: var(--text-muted); background: var(--ivory-dark); padding: 2px 8px; border-radius: 10px; }
@@ -393,6 +404,7 @@
     const filterH = document.querySelector('.filter-sticky').offsetHeight;
     document.documentElement.style.setProperty('--hero-h', heroH + 'px');
     document.documentElement.style.setProperty('--filter-top', (heroH + progressH) + 'px');
+    document.documentElement.style.setProperty('--section-top', (heroH + progressH + filterH) + 'px');
     window._stickyOffset = heroH + progressH + filterH + 8;
   }
   setStickyTop();
@@ -520,6 +532,10 @@
       chip.className = 'filter-chip cat-nav-chip';
       chip.textContent = icon + ' ' + cat;
       chip.onclick = () => {
+        // Tap flash
+        chip.classList.add('tapped');
+        setTimeout(() => chip.classList.remove('tapped'), 300);
+
         const el = document.getElementById('cat-' + cat.replace(/[^a-zA-Z0-9]/g, '-'));
         if (el) {
           const heroH = document.querySelector('.hero').offsetHeight;
