@@ -288,17 +288,17 @@
 
 <script type="module">
   console.log('Script started');
-  // ── REPLACE WITH YOUR FIREBASE CONFIG ──
-  const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
-  };
-
-  const USE_LOCAL = firebaseConfig.apiKey === "YOUR_API_KEY";
+  // ── FIREBASE CONFIG — loaded from firebase-config.js ──
+  let firebaseConfig = {};
+  let USE_LOCAL = true;
+  try {
+    const configModule = await import('./firebase-config.js');
+    firebaseConfig = configModule.firebaseConfig;
+    USE_LOCAL = false;
+    console.log('Firebase config loaded');
+  } catch(e) {
+    console.log('No firebase-config.js found — using localStorage');
+  }
 
   let db, tasksRef, catsRef, addDoc, updateDoc, deleteDoc, doc, serverTimestamp,
       writeBatch, onSnapshot, query, orderBy, collection, getDocs, setDoc, getDoc;
