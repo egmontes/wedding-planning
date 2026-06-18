@@ -49,6 +49,9 @@
   .filter-row-status .filter-chip { flex: 1; text-align: center; padding: 6px 4px; }
   .filter-chip.active { background: var(--navy); border-color: var(--navy); color: white; }
   .filter-chip.tapped { background: var(--rose); border-color: var(--rose); color: white; transform: scale(0.93); transition: transform 0.1s ease, background 0.1s ease; }
+  .filter-row-status .filter-chip-trash { flex: 0 0 42px; font-size: 15px; }
+  .task-card.deleted-card { border-color: var(--rose); opacity: 0.7; }
+  .task-delete-perm { background: var(--rose); color: white; border: none; border-radius: 8px; padding: 6px 14px; font-size: 13px; font-family: 'DM Sans', sans-serif; font-weight: 600; cursor: pointer; flex-shrink: 0; }
   .scroll-fade-wrap { position: relative; }
   .scroll-fade-wrap::before, .scroll-fade-wrap::after { content: ''; position: absolute; top: 0; bottom: 0; width: 28px; pointer-events: none; z-index: 2; transition: opacity 0.2s; }
   .scroll-fade-wrap::before { left: 0; background: linear-gradient(to right, var(--ivory), transparent); opacity: 0; }
@@ -166,6 +169,7 @@
     <div class="filter-chip" onclick="setFilter('done',this)">Done</div>
     <div class="filter-chip" onclick="setFilter('lexi',this)">Lexi</div>
     <div class="filter-chip" onclick="setFilter('eddy',this)">Eddy</div>
+    <div class="filter-chip filter-chip-trash" onclick="setFilter('deleted',this)" title="Deleted items">🗑️</div>
   </div>
   <div class="scroll-fade-wrap">
     <div class="filter-row" id="category-nav"></div>
@@ -469,6 +473,8 @@
   function render() {
     const today = new Date(); today.setHours(0,0,0,0);
     const filtered = allTasks.filter(t => {
+      if (currentFilter === 'deleted') return t.category === '__deleted__';
+      if (t.category === '__deleted__') return false; // exclude from all other filters
       if (currentFilter === 'done')  return t.done;
       if (currentFilter === 'todo')  return !t.done;
       if (currentFilter === 'lexi')  return !t.done && t.owner && t.owner.toLowerCase().includes('lexi');
@@ -476,8 +482,8 @@
       return true;
     });
 
-    const total = allTasks.length;
-    const done  = allTasks.filter(t => t.done).length;
+    const total = allTasks.filter(t => t.category !== '__deleted__').length;
+    const done  = allTasks.filter(t => t.done && t.category !== '__deleted__').length;
     const pct   = total ? Math.round(done/total*100) : 0;
     document.getElementById('progress-bar').style.width = pct + '%';
     document.getElementById('progress-label').textContent = `${done} / ${total} done`;
@@ -513,6 +519,27 @@
       }
 
       let html = '';
+      // Handle deleted filter — show as one flat list
+      if (currentFilter === 'deleted') {
+        if (filtered.length === 0) {
+          html = '<div class="empty-state"><div class="empty-state-icon">🗑️</div><p>Nothing deleted.</p></div>';
+        } else {
+          html += `<div class="category-group"><div class="category-header"><span class="category-icon">🗑️</span><span class="category-name">Deleted</span><span class="category-count">${filtered.length}</span></div>`;
+          filtered.forEach(t => {
+            html += `<div class="task-card deleted-card">
+              <div class="task-body">
+                <div class="task-text">${escHtml(t.text)}</div>
+                ${t.details ? `<div class="task-details">${escHtml(t.details)}</div>` : ''}
+              </div>
+              <button class="btn-cancel" style="font-size:12px;padding:6px 10px;flex-shrink:0;" onclick="restoreTask('${t.id}')">Restore</button>
+              <button class="task-delete-perm" onclick="permanentDelete('${t.id}','${escHtml(t.text)}')">Delete</button>
+            </div>`;
+          });
+          html += '</div>';
+        }
+        container.innerHTML = html;
+      } else {
+
       for (const cat of allCategories) {
         const tasks = sortTasks(groups[cat.name] || []);
         if (!tasks.length) continue;
@@ -525,6 +552,7 @@
             <span class="category-count">${remaining > 0 ? remaining+' left' : '✓ done'}</span>
           </div>`;
         tasks.forEach(t => {
+          const isDeleted = t.category === '__deleted__';
           let metaHtml = '';
           if (t.due) {
             const d = new Date(t.due+'T00:00:00');
@@ -542,19 +570,32 @@
             const label = (o.includes('lexi') && o.includes('eddy')) ? 'Both' : t.owner.replace('Lexi + Eddy','Both').replace('Lexi+Eddy','Both');
             metaHtml += `<span class="task-owner ${cls}">${label}</span>`;
           }
-          html += `<div class="task-card${t.done?' done':''}" onclick="openEdit('${t.id}')">
-            <div class="task-checkbox${t.done?' checked':''}" onclick="event.stopPropagation();toggleTask('${t.id}',${t.done})"></div>
-            <div class="task-body">
-              <div class="task-text">${escHtml(t.text)}</div>
-              ${metaHtml ? `<div class="task-meta">${metaHtml}</div>` : ''}
-              ${t.details ? `<div class="task-details">${escHtml(t.details)}</div>` : ''}
-            </div>
-            <button class="task-delete" onclick="event.stopPropagation();deleteTask('${t.id}')" title="Delete">×</button>
-          </div>`;
+          if (isDeleted) {
+            html += `<div class="task-card deleted-card">
+              <div class="task-body">
+                <div class="task-text">${escHtml(t.text)}</div>
+                ${metaHtml ? `<div class="task-meta">${metaHtml}</div>` : ''}
+                ${t.details ? `<div class="task-details">${escHtml(t.details)}</div>` : ''}
+              </div>
+              <button class="btn-cancel" style="font-size:12px;padding:6px 10px;flex-shrink:0;" onclick="restoreTask('${t.id}')">Restore</button>
+              <button class="task-delete-perm" onclick="permanentDelete('${t.id}','${escHtml(t.text)}')">Delete</button>
+            </div>`;
+          } else {
+            html += `<div class="task-card${t.done?' done':''}" onclick="openEdit('${t.id}')">
+              <div class="task-checkbox${t.done?' checked':''}" onclick="event.stopPropagation();toggleTask('${t.id}',${t.done})"></div>
+              <div class="task-body">
+                <div class="task-text">${escHtml(t.text)}</div>
+                ${metaHtml ? `<div class="task-meta">${metaHtml}</div>` : ''}
+                ${t.details ? `<div class="task-details">${escHtml(t.details)}</div>` : ''}
+              </div>
+              <button class="task-delete" onclick="event.stopPropagation();deleteTask('${t.id}')" title="Delete">×</button>
+            </div>`;
+          }
         });
         html += '</div>';
       }
       container.innerHTML = html;
+      } // end else (non-deleted)
     }
 
     // Rebuild category nav chips
@@ -572,10 +613,9 @@
         setTimeout(() => chip.classList.remove('tapped'), 300);
         const el = document.getElementById('cat-' + cat.name.replace(/[^a-zA-Z0-9]/g,'-'));
         if (el) {
-          const heroH    = document.querySelector('.hero').offsetHeight;
           const progressH = document.querySelector('.progress-wrap').offsetHeight;
-          const filterH  = document.querySelector('.filter-sticky').offsetHeight;
-          const offset   = heroH + progressH + filterH + 8;
+          const filterH   = document.querySelector('.filter-sticky').offsetHeight;
+          const offset    = progressH + filterH + 8;
           window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - offset, behavior: 'smooth' });
         }
       };
@@ -730,14 +770,14 @@
   };
 
   window.deleteTask = async function(id) {
-    if (!confirm('Remove this task?')) return;
+    const updates = { category: '__deleted__' };
     if (USE_LOCAL) {
-      const tasks = lsLoadTasks().filter(t => t.id !== id);
+      const tasks = lsLoadTasks().map(t => t.id === id ? { ...t, ...updates } : t);
       lsSaveTasks(tasks); allTasks = tasks; render();
     } else {
-      await deleteDoc(doc(db,'wedding/tasks/items',id));
+      await updateDoc(doc(db,'wedding/tasks/items',id), updates);
     }
-    showToast('Removed');
+    showToast('Moved to deleted');
   };
 
   window.setFilter = function(f, el) {
@@ -745,6 +785,28 @@
     document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
     el.classList.add('active');
     render();
+  };
+
+  window.restoreTask = async function(id) {
+    const updates = { category: allCategories[0]?.name || 'Other' };
+    if (USE_LOCAL) {
+      const tasks = lsLoadTasks().map(t => t.id === id ? { ...t, ...updates } : t);
+      lsSaveTasks(tasks); allTasks = tasks; render();
+    } else {
+      await updateDoc(doc(db,'wedding/tasks/items',id), updates);
+    }
+    showToast('Task restored');
+  };
+
+  window.permanentDelete = async function(id, name) {
+    if (!confirm(`Permanently delete "${name}"? This cannot be undone.`)) return;
+    if (USE_LOCAL) {
+      const tasks = lsLoadTasks().filter(t => t.id !== id);
+      lsSaveTasks(tasks); allTasks = tasks; render();
+    } else {
+      await deleteDoc(doc(db,'wedding/tasks/items',id));
+    }
+    showToast('Permanently deleted');
   };
 
   window.seedTasks = async function() {
