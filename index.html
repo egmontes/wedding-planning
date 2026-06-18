@@ -8,20 +8,20 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --navy: #1B2A4A;
-    --navy-light: #253659;
-    --ivory: #F7F0E6;
-    --ivory-dark: #EDE4D6;
-    --rose: #C9847A;
-    --rose-dark: #B5706A;
-    --gold: #D4AF6E;
-    --slate: #8FA3BF;
+    --navy: #3D0A1A;
+    --navy-light: #5C1020;
+    --ivory: #F5EDE0;
+    --ivory-dark: #EDE0CE;
+    --rose: #7A2040;
+    --rose-dark: #5C1020;
+    --gold: #D4BC8A;
+    --slate: #C4A0A8;
     --green: #6A9E7A;
-    --amber: #C4923A;
-    --text: #1B2A4A;
-    --text-muted: #6B7F99;
+    --amber: #B8860B;
+    --text: #3D0A1A;
+    --text-muted: #8B5A65;
     --surface: #FFFFFF;
-    --border: #E2D9CD;
+    --border: #E0CECE;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'DM Sans', sans-serif; background: var(--ivory); color: var(--text); min-height: 100vh; }
@@ -35,7 +35,7 @@
     position: sticky;
     top: 0;
     z-index: 100;
-    box-shadow: 0 2px 12px rgba(27,42,74,0.3);
+    box-shadow: 0 2px 12px rgba(61,10,26,0.4);
   }
   .hero-eyebrow { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--slate); margin-bottom: 4px; }
   .hero-title { font-family: 'Cormorant Garant', serif; font-size: 24px; font-weight: 600; color: var(--ivory); margin-bottom: 14px; }
@@ -55,7 +55,7 @@
   .main { padding: 14px 14px 100px; max-width: 600px; margin: 0 auto; }
 
   /* ADD SECTION */
-  .add-section { background: var(--surface); border-radius: 14px; padding: 14px; margin-bottom: 18px; border: 1px solid var(--border); box-shadow: 0 1px 4px rgba(27,42,74,0.06); }
+  .add-section { background: var(--surface); border-radius: 14px; padding: 14px; margin-bottom: 18px; border: 1px solid var(--border); box-shadow: 0 1px 4px rgba(61,10,26,0.08); }
   .add-row { display: flex; gap: 8px; margin-bottom: 9px; }
   .add-input { flex: 1; border: 1.5px solid var(--border); border-radius: 8px; padding: 10px 13px; font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--text); background: var(--ivory); outline: none; transition: border-color 0.15s; }
   .add-input:focus { border-color: var(--rose); }
@@ -79,7 +79,7 @@
   .category-count { font-size: 11px; color: var(--text-muted); background: var(--ivory-dark); padding: 2px 8px; border-radius: 10px; }
 
   /* TASK CARD */
-  .task-card { background: var(--surface); border-radius: 12px; padding: 12px 14px; margin-bottom: 7px; border: 1px solid var(--border); display: flex; align-items: flex-start; gap: 11px; box-shadow: 0 1px 3px rgba(27,42,74,0.05); transition: opacity 0.2s; }
+  .task-card { background: var(--surface); border-radius: 12px; padding: 12px 14px; margin-bottom: 7px; border: 1px solid var(--border); display: flex; align-items: flex-start; gap: 11px; box-shadow: 0 1px 3px rgba(61,10,26,0.07); transition: opacity 0.2s; }
   .task-card.done { opacity: 0.5; }
   .task-card.done .task-text { text-decoration: line-through; }
   .task-checkbox { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--border); cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; transition: border-color 0.15s, background 0.15s; }
@@ -89,11 +89,12 @@
   .task-text { font-size: 14px; line-height: 1.4; color: var(--text); word-break: break-word; }
   .task-meta { display: flex; align-items: center; gap: 6px; margin-top: 5px; flex-wrap: wrap; }
   .task-due { font-size: 11px; color: var(--text-muted); }
+  .task-completed { font-size: 11px; color: var(--green); }
   .task-due.overdue { color: var(--rose); font-weight: 600; }
   .task-owner { font-size: 10px; padding: 2px 7px; border-radius: 10px; font-weight: 500; }
-  .owner-lexi { background: #f3e6f0; color: #8B4A7A; }
-  .owner-eddy { background: #e6ecf5; color: #3A5A8B; }
-  .owner-both { background: #e8f0e8; color: #3A6A3A; }
+  .owner-lexi { background: #f5e0e8; color: #7A2040; }
+  .owner-eddy { background: #e8dff0; color: #4A2060; }
+  .owner-both { background: #e8e0d5; color: #5C3A20; }
   .task-status { font-size: 10px; padding: 2px 7px; border-radius: 10px; }
   .status-complete { background: #e8f5e9; color: var(--green); font-weight: 600; }
   .status-progress { background: #fff3e0; color: var(--amber); font-weight: 600; }
@@ -108,17 +109,17 @@
   .loading { text-align: center; padding: 40px; color: var(--text-muted); font-style: italic; font-family: 'Cormorant Garant', serif; font-size: 18px; }
 
   /* SEED BANNER */
-  .seed-banner { background: #fff8e6; border: 1px solid var(--gold); border-radius: 10px; padding: 12px 14px; margin-bottom: 16px; font-size: 13px; color: #7A5C1A; display: flex; align-items: center; gap: 10px; }
-  .seed-banner button { margin-left: auto; background: var(--gold); color: white; border: none; border-radius: 7px; padding: 7px 14px; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; flex-shrink: 0; }
+  .seed-banner { background: #fdf0e8; border: 1px solid var(--gold); border-radius: 10px; padding: 12px 14px; margin-bottom: 16px; font-size: 13px; color: #7A4020; display: flex; align-items: center; gap: 10px; }
+  .seed-banner button { margin-left: auto; background: var(--gold); color: #3D0A1A; border: none; border-radius: 7px; padding: 7px 14px; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; flex-shrink: 0; }
 
   /* TOAST */
   .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--navy); color: white; padding: 10px 20px; border-radius: 24px; font-size: 13px; pointer-events: none; transition: transform 0.25s ease; z-index: 999; white-space: nowrap; }
   .toast.show { transform: translateX(-50%) translateY(0); }
 
   /* EDIT MODAL */
-  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(27,42,74,0.5); z-index: 500; align-items: flex-end; }
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(61,10,26,0.55); z-index: 500; align-items: flex-end; }
   .modal-overlay.open { display: flex; }
-  .modal-sheet { background: var(--ivory); border-radius: 20px 20px 0 0; padding: 18px 18px 34px; width: 100%; max-width: 600px; margin: 0 auto; box-shadow: 0 -4px 24px rgba(27,42,74,0.15); }
+  .modal-sheet { background: var(--ivory); border-radius: 20px 20px 0 0; padding: 18px 18px 34px; width: 100%; max-width: 600px; margin: 0 auto; box-shadow: 0 -4px 24px rgba(61,10,26,0.2); }
   .modal-handle { width: 36px; height: 4px; background: var(--border); border-radius: 2px; margin: 0 auto 14px; }
   .modal-title { font-family: 'Cormorant Garant', serif; font-size: 20px; font-weight: 600; margin-bottom: 12px; }
   .modal-input { width: 100%; border: 1.5px solid var(--border); border-radius: 10px; padding: 11px 13px; font-size: 15px; font-family: 'DM Sans', sans-serif; color: var(--text); background: var(--surface); outline: none; margin-bottom: 9px; }
@@ -164,14 +165,18 @@
     </div>
     <div class="add-meta">
       <select class="meta-select" id="task-category">
-        <option value="Preparation">🗓️ Preparation</option>
-        <option value="St. Agnes">⛪ St. Agnes</option>
-        <option value="Rusty Pelican">🍽️ Rusty Pelican</option>
-        <option value="Transportation">🚌 Transportation</option>
-        <option value="DJ">🎶 DJ</option>
-        <option value="After Party">🥂 After Party</option>
-        <option value="Rehearsal Dinner">🕯️ Rehearsal Dinner</option>
-        <option value="Wedding Day">💍 Wedding Day</option>
+        <option value="Big Picture">🌟 Big Picture</option>
+        <option value="Bridal Party">💒 Bridal Party</option>
+        <option value="Lexi Bachelorette Party">🥂 Lexi Bachelorette Party</option>
+        <option value="Eddy Bachelor Party">🍻 Eddy Bachelor Party</option>
+        <option value="Hotel Block Prep">🏨 Hotel Block Prep</option>
+        <option value="St. Agnes Prep Steps">⛪ St. Agnes Prep Steps</option>
+        <option value="Rusty Pelican Prep Steps">🍽️ Rusty Pelican Prep Steps</option>
+        <option value="Transportation Prep">🚌 Transportation Prep</option>
+        <option value="DJ Prep">🎶 DJ Prep</option>
+        <option value="After Party Prep">🎉 After Party Prep</option>
+        <option value="January 29th, 2027 — Rehearsal Dinner!">🕯️ Rehearsal Dinner</option>
+        <option value="January 30th, 2027 — Wedding Day!">💍 Wedding Day</option>
         <option value="Other">📋 Other</option>
       </select>
       <select class="meta-select" id="task-owner">
@@ -205,14 +210,18 @@
     <textarea class="modal-input" id="edit-details" placeholder="Notes / details (optional)" rows="2"></textarea>
     <div class="modal-row">
       <select class="modal-select" id="edit-category">
-        <option value="Preparation">🗓️ Preparation</option>
-        <option value="St. Agnes">⛪ St. Agnes</option>
-        <option value="Rusty Pelican">🍽️ Rusty Pelican</option>
-        <option value="Transportation">🚌 Transportation</option>
-        <option value="DJ">🎶 DJ</option>
-        <option value="After Party">🥂 After Party</option>
-        <option value="Rehearsal Dinner">🕯️ Rehearsal Dinner</option>
-        <option value="Wedding Day">💍 Wedding Day</option>
+        <option value="Big Picture">🌟 Big Picture</option>
+        <option value="Bridal Party">💒 Bridal Party</option>
+        <option value="Lexi Bachelorette Party">🥂 Lexi Bachelorette Party</option>
+        <option value="Eddy Bachelor Party">🍻 Eddy Bachelor Party</option>
+        <option value="Hotel Block Prep">🏨 Hotel Block Prep</option>
+        <option value="St. Agnes Prep Steps">⛪ St. Agnes Prep Steps</option>
+        <option value="Rusty Pelican Prep Steps">🍽️ Rusty Pelican Prep Steps</option>
+        <option value="Transportation Prep">🚌 Transportation Prep</option>
+        <option value="DJ Prep">🎶 DJ Prep</option>
+        <option value="After Party Prep">🎉 After Party Prep</option>
+        <option value="January 29th, 2027 — Rehearsal Dinner!">🕯️ Rehearsal Dinner</option>
+        <option value="January 30th, 2027 — Wedding Day!">💍 Wedding Day</option>
         <option value="Other">📋 Other</option>
       </select>
       <select class="modal-select" id="edit-owner">
@@ -223,7 +232,14 @@
       </select>
     </div>
     <div class="modal-row">
-      <input type="date" class="modal-select" id="edit-due" style="flex:1">
+      <div style="flex:1">
+        <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:4px;">Due Date</label>
+        <input type="date" class="modal-select" id="edit-due" style="width:100%">
+      </div>
+      <div style="flex:1">
+        <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:4px;">Date Completed</label>
+        <input type="date" class="modal-select" id="edit-completed" style="width:100%">
+      </div>
     </div>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeEdit()">Cancel</button>
@@ -235,86 +251,114 @@
 <div class="toast" id="toast"></div>
 
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getFirestore, collection, addDoc, onSnapshot, updateDoc, deleteDoc, doc, serverTimestamp, query, orderBy, writeBatch }
-    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
   // ── REPLACE WITH YOUR FIREBASE CONFIG ──
   const firebaseConfig = {
-  apiKey: "AIzaSyAShw_6Iv6GJxmo29YxLkwX0rv3YuXSQ5U",
-  authDomain: "wedding-planning-289a8.firebaseapp.com",
-  projectId: "wedding-planning-289a8",
-  storageBucket: "wedding-planning-289a8.firebasestorage.app",
-  messagingSenderId: "313362929175",
-  appId: "1:313362929175:web:0ee378274d79603cfcee52",
-  measurementId: "G-W9NWS9G0V7"
-};
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  };
 
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-  const tasksRef = collection(db, "wedding/tasks/items");
+  const USE_LOCAL = firebaseConfig.apiKey === "YOUR_API_KEY";
+
+  let db, tasksRef, addDoc, updateDoc, deleteDoc, doc, serverTimestamp, writeBatch, onSnapshot, query, orderBy, collection;
+
+  if (!USE_LOCAL) {
+    const fb = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js");
+    const fs = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+    const app = fb.initializeApp(firebaseConfig);
+    db = fs.getFirestore(app);
+    ({ addDoc, updateDoc, deleteDoc, doc, serverTimestamp, writeBatch, onSnapshot, query, orderBy, collection } = fs);
+    tasksRef = collection(db, "wedding/tasks/items");
+  }
+
+  // ── LOCAL STORAGE HELPERS (used when Firebase not configured) ──
+  const LS_KEY = 'wedding_tasks_local';
+  function lsLoad() { try { return JSON.parse(localStorage.getItem(LS_KEY)) || []; } catch { return []; } }
+  function lsSave(tasks) { localStorage.setItem(LS_KEY, JSON.stringify(tasks)); }
+  function lsNotify() {
+    allTasks = lsLoad();
+    const banner = document.getElementById('seed-banner');
+    banner.style.display = allTasks.length === 0 ? 'flex' : 'none';
+    render();
+  }
 
   let allTasks = [];
   let currentFilter = 'all';
   let editingId = null;
 
   const CATEGORIES = {
-    "Preparation": "🗓️",
-    "St. Agnes": "⛪",
-    "Rusty Pelican": "🍽️",
-    "Transportation": "🚌",
-    "DJ": "🎶",
-    "After Party": "🥂",
-    "Rehearsal Dinner": "🕯️",
-    "Wedding Day": "💍",
+    "Big Picture": "🌟",
+    "Bridal Party": "💒",
+    "Lexi Bachelorette Party": "🥂",
+    "Eddy Bachelor Party": "🍻",
+    "Hotel Block Prep": "🏨",
+    "St. Agnes Prep Steps": "⛪",
+    "Rusty Pelican Prep Steps": "🍽️",
+    "Transportation Prep": "🚌",
+    "DJ Prep": "🎶",
+    "After Party Prep": "🎉",
+    "January 29th, 2027 — Rehearsal Dinner!": "🕯️",
+    "January 30th, 2027 — Wedding Day!": "💍",
     "Other": "📋"
   };
 
-  const CAT_ORDER = ["Preparation","St. Agnes","Rusty Pelican","Transportation","DJ","After Party","Rehearsal Dinner","Wedding Day","Other"];
+  const CAT_ORDER = [
+    "Big Picture","Bridal Party",
+    "Lexi Bachelorette Party","Eddy Bachelor Party","Hotel Block Prep",
+    "St. Agnes Prep Steps","Rusty Pelican Prep Steps",
+    "Transportation Prep","DJ Prep","After Party Prep",
+    "January 29th, 2027 — Rehearsal Dinner!","January 30th, 2027 — Wedding Day!","Other"
+  ];
 
   // Seed data from spreadsheet
   const SEED_TASKS = [
-    {text:"Choose Venue",category:"Preparation",done:true,due:null,owner:"Lexi + Eddy",details:"Rusty Pelican"},
-    {text:"Choose Date",category:"Preparation",done:true,due:null,owner:"Lexi + Eddy",details:"January 30th, 2027"},
-    {text:"Lexi Bridesmaids",category:"Preparation",done:false,due:null,owner:"Lexi",details:null},
-    {text:"Eddy Groomsmen",category:"Preparation",done:false,due:null,owner:"Eddy",details:null},
-    {text:"Lexi Bachelorette Party",category:"Preparation",done:false,due:null,owner:"Lexi",details:null},
-    {text:"Eddy Bachelor Party",category:"Preparation",done:false,due:null,owner:"Eddy",details:null},
-    {text:"Hotel Block Prep",category:"Preparation",done:false,due:null,owner:null,details:null},
-    {text:"St. Agnes Marriage Application",category:"St. Agnes",done:true,due:null,owner:"Lexi+Eddy",details:null},
-    {text:"Submit St. Agnes Payment",category:"St. Agnes",done:true,due:null,owner:"Lexi+Eddy",details:null},
-    {text:"Picture of Couple",category:"St. Agnes",done:true,due:null,owner:null,details:null},
-    {text:"Go to Easter Mass at Cathedral of Holy Cross",category:"St. Agnes",done:false,due:"2026-04-05",owner:"Lexi+Eddy",details:null},
-    {text:"Schedule Form A Meeting with Priest",category:"St. Agnes",done:false,due:"2026-04-16",owner:"Lexi+Eddy",details:"Agreed to Thursday 7pm via phone call"},
-    {text:"Lexi Baptism Certificate",category:"St. Agnes",done:false,due:"2026-08-24",owner:"Lexi",details:"Based on 6 months post-application due date (application started 2/24/26)"},
-    {text:"Eddy Baptism Certificate",category:"St. Agnes",done:false,due:"2026-08-24",owner:"Eddy",details:null},
-    {text:"Form A with Priest",category:"St. Agnes",done:false,due:null,owner:"Lexi+Eddy",details:null},
-    {text:"Lexi Proof of First Communion",category:"St. Agnes",done:false,due:"2026-08-24",owner:"Lexi",details:null},
-    {text:"Eddy Proof of First Communion",category:"St. Agnes",done:false,due:"2026-08-24",owner:"Eddy",details:null},
-    {text:"Lexi Proof of Confirmation",category:"St. Agnes",done:false,due:"2026-08-24",owner:"Lexi",details:null},
-    {text:"Eddy Proof of Confirmation",category:"St. Agnes",done:false,due:"2026-08-24",owner:"Eddy",details:null},
-    {text:"Lexi Copy of ID",category:"St. Agnes",done:false,due:"2026-08-24",owner:"Lexi",details:null},
-    {text:"Eddy Copy of ID",category:"St. Agnes",done:false,due:"2026-08-24",owner:"Eddy",details:null},
-    {text:"Civil Marriage License from Florida",category:"St. Agnes",done:false,due:null,owner:null,details:null},
-    {text:"Form B",category:"St. Agnes",done:false,due:null,owner:"Lexi+Eddy",details:"2 witnesses for each — in front of priest or notary"},
-    {text:"Fully Engaged Questionnaire",category:"St. Agnes",done:false,due:null,owner:"Lexi+Eddy",details:"Meeting with a couple"},
-    {text:"Retreat",category:"St. Agnes",done:false,due:null,owner:"Lexi+Eddy",details:null},
-    {text:"NFP Course",category:"St. Agnes",done:false,due:null,owner:"Lexi+Eddy",details:null},
-    {text:"Cathedral of Holy Cross Letter",category:"St. Agnes",done:false,due:null,owner:"Lexi+Eddy",details:"Granting permission to marry in St. Agnes"},
-    {text:"Readings and List of Readers",category:"St. Agnes",done:false,due:"2026-12-30",owner:null,details:"Needed one month pre-wedding"},
-    {text:"Submit first payment to Rusty Pelican",category:"Rusty Pelican",done:true,due:null,owner:"Lexi + Eddy",details:null},
-    {text:"Schedule Menu Tasting",category:"Rusty Pelican",done:false,due:"2026-11-01",owner:null,details:"Can be hosted starting 90 days prior to wedding"},
-    {text:"Second payment to Rusty Pelican",category:"Rusty Pelican",done:false,due:"2026-11-01",owner:null,details:"$16k due 90 days prior to wedding"},
-    {text:"Menu Tasting",category:"Rusty Pelican",done:false,due:"2026-12-02",owner:null,details:null},
-    {text:"Menu Selections Due",category:"Rusty Pelican",done:false,due:"2026-12-31",owner:null,details:null},
-    {text:"Setup Requirements, timeline, and vendor list with COIs due",category:"Rusty Pelican",done:false,due:"2026-12-31",owner:null,details:"Due 30 days prior to event"},
-    {text:"Final Headcount and Payment Due",category:"Rusty Pelican",done:false,due:"2027-01-16",owner:null,details:null},
-    {text:"Mass Rehearsal",category:"Rehearsal Dinner",done:false,due:"2027-01-29",owner:null,details:"Scheduled by clergy the week of the wedding"},
-    {text:"St. Agnes Ceremony",category:"Wedding Day",done:false,due:"2027-01-30",owner:null,details:"3pm start"},
-    {text:"Shuttle to Rusty Pelican",category:"Wedding Day",done:false,due:"2027-01-30",owner:null,details:null},
-    {text:"Cocktail Hour",category:"Wedding Day",done:false,due:"2027-01-30",owner:null,details:null},
-    {text:"Reception",category:"Wedding Day",done:false,due:"2027-01-30",owner:null,details:"Speeches?"},
-    {text:"After Party",category:"Wedding Day",done:false,due:"2027-01-30",owner:null,details:null},
+    {text:"Choose Venue",category:"Big Picture",done:true,due:null,completed:"2025-12-01",owner:"Lexi+Eddy",details:"Rusty Pelican"},
+    {text:"Choose Date",category:"Big Picture",done:true,due:null,completed:"2025-12-01",owner:"Lexi+Eddy",details:"January 30th, 2027"},
+    {text:"Lexi Bridesmaids",category:"Bridal Party",done:false,due:null,owner:"Lexi",details:null},
+    {text:"Eddy Groomsmen",category:"Bridal Party",done:false,due:null,owner:"Eddy",details:null},
+    {text:"Lexi Bachelorette Party",category:"Lexi Bachelorette Party",done:false,due:null,owner:"Lexi",details:null},
+    {text:"Eddy Bachelor Party",category:"Eddy Bachelor Party",done:false,due:null,owner:"Eddy",details:null},
+    {text:"Hotel Block Prep",category:"Hotel Block Prep",done:false,due:null,owner:null,details:null},
+    {text:"St. Agnes Marriage Application",category:"St. Agnes Prep Steps",done:true,due:null,completed:"2026-02-24",owner:"Lexi+Eddy",details:null},
+    {text:"Submit St. Agnes Payment",category:"St. Agnes Prep Steps",done:true,due:null,completed:"2026-02-25",owner:"Lexi+Eddy",details:null},
+    {text:"Picture of Couple",category:"St. Agnes Prep Steps",done:true,due:null,owner:null,details:null},
+    {text:"Go to Easter Mass at Cathedral of Holy Cross",category:"St. Agnes Prep Steps",done:false,due:"2026-04-05",owner:"Lexi+Eddy",details:null},
+    {text:"Schedule Form A Meeting with Priest",category:"St. Agnes Prep Steps",done:false,due:"2026-04-16",owner:"Lexi+Eddy",details:"Agreed to Thursday 7pm via phone call"},
+    {text:"Lexi Baptism Certificate",category:"St. Agnes Prep Steps",done:false,due:"2026-08-24",owner:"Lexi",details:"Based on 6 months post-application due date (application started 2/24/26)"},
+    {text:"Eddy Baptism Certificate",category:"St. Agnes Prep Steps",done:false,due:"2026-08-24",owner:"Eddy",details:null},
+    {text:"Form A with Priest",category:"St. Agnes Prep Steps",done:false,due:null,owner:"Lexi+Eddy",details:null},
+    {text:"Lexi Proof of First Communion",category:"St. Agnes Prep Steps",done:false,due:"2026-08-24",owner:"Lexi",details:null},
+    {text:"Eddy Proof of First Communion",category:"St. Agnes Prep Steps",done:false,due:"2026-08-24",owner:"Eddy",details:null},
+    {text:"Lexi Proof of Confirmation",category:"St. Agnes Prep Steps",done:false,due:"2026-08-24",owner:"Lexi",details:null},
+    {text:"Eddy Proof of Confirmation",category:"St. Agnes Prep Steps",done:false,due:"2026-08-24",owner:"Eddy",details:null},
+    {text:"Lexi Copy of ID",category:"St. Agnes Prep Steps",done:false,due:"2026-08-24",owner:null,details:null},
+    {text:"Eddy Copy of ID",category:"St. Agnes Prep Steps",done:false,due:"2026-08-24",owner:null,details:null},
+    {text:"Civil Marriage License from Florida",category:"St. Agnes Prep Steps",done:false,due:null,owner:null,details:null},
+    {text:"Form B",category:"St. Agnes Prep Steps",done:false,due:null,owner:"Witnesses",details:"2 witnesses for each — in front of priest or notary"},
+    {text:"Fully Engaged Questionnaire",category:"St. Agnes Prep Steps",done:false,due:null,owner:"Lexi+Eddy",details:"Meeting with a couple"},
+    {text:"Retreat",category:"St. Agnes Prep Steps",done:false,due:null,owner:"Lexi+Eddy",details:null},
+    {text:"NFP Course",category:"St. Agnes Prep Steps",done:false,due:null,owner:"Lexi+Eddy",details:null},
+    {text:"Cathedral of Holy Cross Letter",category:"St. Agnes Prep Steps",done:false,due:null,owner:"Lexi+Eddy",details:"Granting permission to marry in St. Agnes"},
+    {text:"Readings and List of Readers",category:"St. Agnes Prep Steps",done:false,due:"2026-12-30",owner:null,details:"Needed one month pre-wedding"},
+    {text:"Submit first payment to Rusty Pelican",category:"Rusty Pelican Prep Steps",done:true,due:null,owner:"Lexi+Eddy",details:null},
+    {text:"Schedule Menu Tasting",category:"Rusty Pelican Prep Steps",done:false,due:"2026-11-01",owner:null,details:"Can be hosted starting 90 days prior to wedding"},
+    {text:"Second payment to Rusty Pelican",category:"Rusty Pelican Prep Steps",done:false,due:"2026-11-01",owner:null,details:"$16k due 90 days prior to wedding"},
+    {text:"Menu Tasting",category:"Rusty Pelican Prep Steps",done:false,due:"2026-12-02",owner:null,details:null},
+    {text:"Menu Selections Due",category:"Rusty Pelican Prep Steps",done:false,due:"2026-12-31",owner:null,details:null},
+    {text:"Setup Requirements, timeline, and vendor list with COIs due",category:"Rusty Pelican Prep Steps",done:false,due:"2026-12-31",owner:null,details:"Due 30 days prior to event"},
+    {text:"Final Headcount and Payment Due",category:"Rusty Pelican Prep Steps",done:false,due:"2027-01-16",owner:null,details:null},
+    {text:"Transportation Prep",category:"Transportation Prep",done:false,due:null,owner:null,details:null},
+    {text:"DJ Prep",category:"DJ Prep",done:false,due:null,owner:null,details:null},
+    {text:"After Party Prep",category:"After Party Prep",done:false,due:null,owner:null,details:null},
+    {text:"Mass Rehearsal",category:"January 29th, 2027 — Rehearsal Dinner!",done:false,due:"2027-01-29",owner:null,details:"Scheduled by clergy the week of the wedding"},
+    {text:"St. Agnes Ceremony",category:"January 30th, 2027 — Wedding Day!",done:false,due:"2027-01-30",owner:null,details:"3pm start"},
+    {text:"Shuttle to Rusty Pelican",category:"January 30th, 2027 — Wedding Day!",done:false,due:"2027-01-30",owner:null,details:null},
+    {text:"Cocktail Hour",category:"January 30th, 2027 — Wedding Day!",done:false,due:"2027-01-30",owner:null,details:null},
+    {text:"Reception",category:"January 30th, 2027 — Wedding Day!",done:false,due:"2027-01-30",owner:null,details:"Speeches?"},
+    {text:"After Party",category:"January 30th, 2027 — Wedding Day!",done:false,due:"2027-01-30",owner:null,details:null},
   ];
 
   // COUNTDOWN
@@ -329,15 +373,18 @@
   updateCountdown();
   setInterval(updateCountdown, 30000);
 
-  // FIRESTORE LISTENER
-  const q = query(tasksRef, orderBy('createdAt','asc'));
-  onSnapshot(q, (snap) => {
-    allTasks = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-    const banner = document.getElementById('seed-banner');
-    if (allTasks.length === 0) banner.style.display = 'flex';
-    else banner.style.display = 'none';
-    render();
-  });
+  // START LISTENER
+  if (USE_LOCAL) {
+    lsNotify();
+  } else {
+    const q = query(tasksRef, orderBy('createdAt','asc'));
+    onSnapshot(q, (snap) => {
+      allTasks = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      const banner = document.getElementById('seed-banner');
+      banner.style.display = allTasks.length === 0 ? 'flex' : 'none';
+      render();
+    });
+  }
 
   // RENDER
   function render() {
@@ -390,7 +437,12 @@
           const d = new Date(t.due+'T00:00:00');
           const isOverdue = !t.done && d < today;
           const label = d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
-          metaHtml += `<span class="task-due${isOverdue?' overdue':''}">${isOverdue?'⚠️ ':'📅 '}${label}</span>`;
+          metaHtml += `<span class="task-due${isOverdue?' overdue':''}">${isOverdue?'⚠️ ':'📅 '}Due ${label}</span>`;
+        }
+        if (t.completed) {
+          const c = new Date(t.completed+'T00:00:00');
+          const label = c.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+          metaHtml += `<span class="task-completed">✅ Completed ${label}</span>`;
         }
         if (t.owner) {
           const o = t.owner.toLowerCase();
@@ -422,27 +474,46 @@
     const input = document.getElementById('task-input');
     const text = input.value.trim();
     if (!text) return;
-    await addDoc(tasksRef, {
+    const task = {
       text,
       category: document.getElementById('task-category').value,
       owner: document.getElementById('task-owner').value || null,
       due: document.getElementById('task-due').value || null,
       details: null,
       done: false,
-      createdAt: serverTimestamp()
-    });
+    };
+    if (USE_LOCAL) {
+      const tasks = lsLoad();
+      task.id = 'local_' + Date.now();
+      task.createdAt = Date.now();
+      tasks.push(task);
+      lsSave(tasks);
+      lsNotify();
+    } else {
+      await addDoc(tasksRef, { ...task, createdAt: serverTimestamp() });
+    }
     input.value = '';
     document.getElementById('task-due').value = '';
     showToast('Task added');
   };
 
   window.toggleTask = async function(id, current) {
-    await updateDoc(doc(db,'wedding/tasks/items',id), { done: !current });
+    const updates = { done: !current };
+    if (USE_LOCAL) {
+      const tasks = lsLoad().map(t => t.id === id ? { ...t, ...updates } : t);
+      lsSave(tasks); lsNotify();
+    } else {
+      await updateDoc(doc(db,'wedding/tasks/items',id), updates);
+    }
   };
 
   window.deleteTask = async function(id) {
     if (!confirm('Remove this task?')) return;
-    await deleteDoc(doc(db,'wedding/tasks/items',id));
+    if (USE_LOCAL) {
+      lsSave(lsLoad().filter(t => t.id !== id)); lsNotify();
+    } else {
+      await deleteDoc(doc(db,'wedding/tasks/items',id));
+    }
     showToast('Removed');
   };
 
@@ -455,15 +526,20 @@
 
   // SEED
   window.seedTasks = async function() {
-    document.getElementById('seed-banner').innerHTML = '<span>Importing 41 tasks…</span>';
-    const batch = writeBatch(db);
-    let t = Date.now();
-    SEED_TASKS.forEach((task, i) => {
-      const ref = doc(tasksRef);
-      batch.set(ref, { ...task, createdAt: { seconds: Math.floor((t + i*100)/1000), nanoseconds: 0 } });
-    });
-    await batch.commit();
-    showToast('41 tasks imported! 🎉');
+    document.getElementById('seed-banner').innerHTML = '<span>Importing 44 tasks…</span>';
+    if (USE_LOCAL) {
+      const tasks = SEED_TASKS.map((t, i) => ({ ...t, id: 'local_' + (Date.now() + i), createdAt: Date.now() + i }));
+      lsSave(tasks); lsNotify();
+    } else {
+      const batch = writeBatch(db);
+      let t = Date.now();
+      SEED_TASKS.forEach((task, i) => {
+        const ref = doc(tasksRef);
+        batch.set(ref, { ...task, createdAt: { seconds: Math.floor((t + i*100)/1000), nanoseconds: 0 } });
+      });
+      await batch.commit();
+    }
+    showToast('44 tasks imported! 🎉');
   };
 
   // EDIT
@@ -476,6 +552,7 @@
     document.getElementById('edit-category').value = t.category || 'Other';
     document.getElementById('edit-owner').value = t.owner || '';
     document.getElementById('edit-due').value = t.due || '';
+    document.getElementById('edit-completed').value = t.completed || '';
     document.getElementById('edit-modal').classList.add('open');
   };
 
@@ -488,13 +565,20 @@
     if (!editingId) return;
     const text = document.getElementById('edit-text').value.trim();
     if (!text) return;
-    await updateDoc(doc(db,'wedding/tasks/items',editingId), {
+    const updates = {
       text,
       details: document.getElementById('edit-details').value.trim() || null,
       category: document.getElementById('edit-category').value,
       owner: document.getElementById('edit-owner').value || null,
       due: document.getElementById('edit-due').value || null,
-    });
+      completed: document.getElementById('edit-completed').value || null,
+    };
+    if (USE_LOCAL) {
+      const tasks = lsLoad().map(t => t.id === editingId ? { ...t, ...updates } : t);
+      lsSave(tasks); lsNotify();
+    } else {
+      await updateDoc(doc(db,'wedding/tasks/items',editingId), updates);
+    }
     closeEdit();
     showToast('Saved');
   };
