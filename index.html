@@ -65,14 +65,7 @@
   .main { padding: 14px 14px 100px; max-width: 600px; margin: 0 auto; }
 
   /* ADD SECTION */
-  .add-section { background: var(--surface); border-radius: 14px; padding: 14px; margin-bottom: 18px; border: 1px solid var(--border); box-shadow: 0 1px 4px rgba(61,10,26,0.08); }
-  .add-row { display: flex; gap: 8px; margin-bottom: 9px; }
-  .add-input { flex: 1; border: 1.5px solid var(--border); border-radius: 8px; padding: 10px 13px; font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--text); background: var(--ivory); outline: none; transition: border-color 0.15s; }
   .add-input:focus { border-color: var(--rose); }
-  .add-btn { background: var(--rose); color: white; border: none; border-radius: 8px; padding: 10px 16px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; white-space: nowrap; }
-  .add-btn:active { background: var(--rose-dark); }
-  .add-meta { display: flex; gap: 8px; flex-wrap: wrap; }
-  .meta-select, .due-input { flex: 1; min-width: 120px; border: 1.5px solid var(--border); border-radius: 8px; padding: 8px 11px; font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--text); background: var(--ivory); outline: none; }
   .meta-select { appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238FA3BF' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; padding-right: 28px; }
 
   /* FILTERS */
@@ -166,6 +159,27 @@
   .toast.show { transform: translateX(-50%) translateY(0); }
 
   /* EDIT MODAL */
+  .fab {
+    position: fixed;
+    bottom: 28px;
+    right: 22px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--rose);
+    color: white;
+    font-size: 30px;
+    line-height: 1;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(61,10,26,0.3);
+    z-index: 400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.15s, background 0.15s;
+  }
+  .fab:active { transform: scale(0.92); background: var(--rose-dark); }
   .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(61,10,26,0.55); z-index: 500; align-items: flex-end; }
   .modal-overlay.open { display: flex; }
   .modal-sheet { background: var(--ivory); border-radius: 20px 20px 0 0; padding: 18px 18px 34px; width: 100%; max-width: 600px; margin: 0 auto; box-shadow: 0 -4px 24px rgba(61,10,26,0.2); transition: transform 0.25s ease; touch-action: none; }
@@ -220,36 +234,7 @@
     <button onclick="seedTasks()">Import Now</button>
   </div>
 
-  <div class="add-section">
-    <div class="add-row">
-      <input type="text" class="add-input" id="task-input" placeholder="Add a task…" maxlength="200">
-      <button class="add-btn" onclick="addTask()">Add</button>
-    </div>
-    <div class="add-meta">
-      <select class="meta-select" id="task-category">
-        <option value="Big Picture">🌟 Big Picture</option>
-        <option value="Bridal Party">💒 Bridal Party</option>
-        <option value="Lexi Bachelorette Party">🥂 Lexi Bachelorette Party</option>
-        <option value="Eddy Bachelor Party">🍻 Eddy Bachelor Party</option>
-        <option value="Hotel Block Prep">🏨 Hotel Block Prep</option>
-        <option value="St. Agnes Prep Steps">⛪ St. Agnes Prep Steps</option>
-        <option value="Rusty Pelican Prep Steps">🍽️ Rusty Pelican Prep Steps</option>
-        <option value="Transportation Prep">🚌 Transportation Prep</option>
-        <option value="DJ Prep">🎶 DJ Prep</option>
-        <option value="After Party Prep">🎉 After Party Prep</option>
-        <option value="January 29th, 2027 — Rehearsal Dinner!">🕯️ Rehearsal Dinner</option>
-        <option value="January 30th, 2027 — Wedding Day!">💍 Wedding Day</option>
-        <option value="Other">📋 Other</option>
-      </select>
-      <select class="meta-select" id="task-owner">
-        <option value="">👤 Owner</option>
-        <option value="Lexi">Lexi</option>
-        <option value="Eddy">Eddy</option>
-        <option value="Lexi+Eddy">Both</option>
-      </select>
-      <input type="date" class="due-input" id="task-due">
-    </div>
-  </div>
+
 
   <div id="task-list"><div class="loading">Loading your list…</div></div>
 
@@ -303,6 +288,52 @@
 </div>
 
 <div class="toast" id="toast"></div>
+
+<!-- FAB -->
+<button class="fab" onclick="openAdd()" title="Add task">+</button>
+
+<!-- Add Modal -->
+<div class="modal-overlay" id="add-modal">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">New Task</div>
+    <input type="text" class="modal-input" id="add-text" placeholder="Task name" maxlength="200">
+    <textarea class="modal-input" id="add-details" placeholder="Notes (optional)" rows="2"></textarea>
+    <div class="modal-row">
+      <select class="modal-select" id="add-category">
+        <option value="Big Picture">🌟 Big Picture</option>
+        <option value="Bridal Party">💒 Bridal Party</option>
+        <option value="Lexi Bachelorette Party">🥂 Lexi Bachelorette Party</option>
+        <option value="Eddy Bachelor Party">🍻 Eddy Bachelor Party</option>
+        <option value="Hotel Block Prep">🏨 Hotel Block Prep</option>
+        <option value="St. Agnes Prep Steps">⛪ St. Agnes Prep Steps</option>
+        <option value="Rusty Pelican Prep Steps">🍽️ Rusty Pelican Prep Steps</option>
+        <option value="Transportation Prep">🚌 Transportation Prep</option>
+        <option value="DJ Prep">🎶 DJ Prep</option>
+        <option value="After Party Prep">🎉 After Party Prep</option>
+        <option value="January 29th, 2027 — Rehearsal Dinner!">🕯️ Rehearsal Dinner</option>
+        <option value="January 30th, 2027 — Wedding Day!">💍 Wedding Day</option>
+        <option value="Other">📋 Other</option>
+      </select>
+      <select class="modal-select" id="add-owner">
+        <option value="">No owner</option>
+        <option value="Lexi">Lexi</option>
+        <option value="Eddy">Eddy</option>
+        <option value="Lexi+Eddy">Both</option>
+      </select>
+    </div>
+    <div class="modal-row">
+      <div style="flex:1">
+        <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:4px;">Due Date</label>
+        <input type="date" class="modal-select" id="add-due" style="width:100%">
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeAdd()">Cancel</button>
+      <button class="btn-save" onclick="addTask()">Add Task</button>
+    </div>
+  </div>
+</div>
 
 <script type="module">
   // ── REPLACE WITH YOUR FIREBASE CONFIG ──
@@ -599,16 +630,28 @@
   function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
   // ACTIONS
+  window.openAdd = function() {
+    document.getElementById('add-text').value = '';
+    document.getElementById('add-details').value = '';
+    document.getElementById('add-due').value = '';
+    document.getElementById('add-owner').value = '';
+    document.getElementById('add-modal').classList.add('open');
+    setTimeout(() => document.getElementById('add-text').focus(), 100);
+  };
+
+  window.closeAdd = function() {
+    document.getElementById('add-modal').classList.remove('open');
+  };
+
   window.addTask = async function() {
-    const input = document.getElementById('task-input');
-    const text = input.value.trim();
+    const text = document.getElementById('add-text').value.trim();
     if (!text) return;
     const task = {
       text,
-      category: document.getElementById('task-category').value,
-      owner: document.getElementById('task-owner').value || null,
-      due: document.getElementById('task-due').value || null,
-      details: null,
+      category: document.getElementById('add-category').value,
+      owner: document.getElementById('add-owner').value || null,
+      due: document.getElementById('add-due').value || null,
+      details: document.getElementById('add-details').value.trim() || null,
       done: false,
     };
     if (USE_LOCAL) {
@@ -621,8 +664,7 @@
     } else {
       await addDoc(tasksRef, { ...task, createdAt: serverTimestamp() });
     }
-    input.value = '';
-    document.getElementById('task-due').value = '';
+    closeAdd();
     showToast('Task added');
   };
 
@@ -712,9 +754,9 @@
     showToast('Saved');
   };
 
-  // Swipe down to close
+  // Swipe down to close (applies to all modal sheets)
   (function() {
-    const sheet = document.querySelector('.modal-sheet');
+    document.querySelectorAll('.modal-sheet').forEach(sheet => {
     let startY = 0, currentY = 0, dragging = false;
 
     sheet.addEventListener('touchstart', function(e) {
@@ -740,15 +782,21 @@
       const delta = currentY - startY;
       if (delta > 80) {
         sheet.style.transform = 'translateY(100%)';
-        setTimeout(() => { sheet.style.transform = ''; closeEdit(); }, 250);
+        const overlay = sheet.closest('.modal-overlay');
+        setTimeout(() => {
+          sheet.style.transform = '';
+          if (overlay.id === 'add-modal') closeAdd();
+          else closeEdit();
+        }, 250);
       } else {
         sheet.style.transform = '';
       }
     });
+    });
   })();
 
   document.getElementById('edit-modal').addEventListener('click', function(e) { if (e.target===this) closeEdit(); });
-  document.getElementById('task-input').addEventListener('keydown', e => { if (e.key==='Enter') window.addTask(); });
+  document.getElementById('add-modal').addEventListener('click', function(e) { if (e.target===this) closeAdd(); });
 
   // TOAST
   function showToast(msg) {
