@@ -487,19 +487,28 @@
       }
       renderCatManager();
 
+      let catsReady = false, tasksReady = false;
+
+      async function onBothReady() {
+        if (!catsReady || !tasksReady) return;
+        await migrateMismatchedCategories();
+        render();
+      }
+
       // Live listen to categories
       onSnapshot(query(catsRef, orderBy('order', 'asc')), snap => {
         allCategories = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        catsReady = true;
         renderCatManager();
-        render();
+        onBothReady();
       });
 
       // Live listen to tasks
       onSnapshot(query(tasksRef, orderBy('createdAt', 'asc')), async snap => {
         allTasks = snap.docs.map(d => ({ id: d.id, ...d.data() }));
         document.getElementById('seed-banner').style.display = 'none';
-        await migrateMismatchedCategories();
-        render();
+        tasksReady = true;
+        onBothReady();
       });
     }
   }
