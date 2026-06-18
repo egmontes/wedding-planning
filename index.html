@@ -433,7 +433,7 @@
       renderCatManager();
       const tasks = lsLoadTasks();
       allTasks = tasks;
-      document.getElementById('seed-banner').style.display = tasks.length === 0 ? 'flex' : 'none';
+      document.getElementById('seed-banner').style.display = USE_LOCAL && tasks.length === 0 ? 'flex' : 'none';
       render();
     } else {
       // Load categories first
@@ -464,7 +464,7 @@
       // Live listen to tasks
       onSnapshot(query(tasksRef, orderBy('createdAt', 'asc')), snap => {
         allTasks = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-        document.getElementById('seed-banner').style.display = allTasks.length === 0 ? 'flex' : 'none';
+        document.getElementById('seed-banner').style.display = 'none'; // never show on Firebase
         render();
       });
     }
