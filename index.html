@@ -196,6 +196,7 @@
     <div class="filter-chip" onclick="setFilter('lexi',this)">Lexi</div>
     <div class="filter-chip" onclick="setFilter('eddy',this)">Eddy</div>
   </div>
+  <div class="filter-row" id="category-nav"></div>
 
   <div id="task-list"><div class="loading">Loading your list…</div></div>
 
@@ -419,13 +420,32 @@
       groups[cat].push(t);
     });
 
+    // Sort each group:
+    // Done tasks first sorted by completed date (no date → top, then earliest → latest)
+    // Then incomplete tasks sorted by due date (no date → bottom, then earliest → latest)
+    function sortTasks(tasks) {
+      const done = tasks.filter(t => t.done).sort((a, b) => {
+        if (!a.completed && !b.completed) return 0;
+        if (!a.completed) return -1;
+        if (!b.completed) return 1;
+        return a.completed.localeCompare(b.completed);
+      });
+      const todo = tasks.filter(t => !t.done).sort((a, b) => {
+        if (!a.due && !b.due) return 0;
+        if (!a.due) return 1;
+        if (!b.due) return -1;
+        return a.due.localeCompare(b.due);
+      });
+      return [...done, ...todo];
+    }
+
     let html = '';
     for (const cat of CAT_ORDER) {
-      const tasks = groups[cat];
+      const tasks = sortTasks(groups[cat] || []);
       if (!tasks || tasks.length === 0) continue;
       const icon = CATEGORIES[cat] || '📋';
       const remaining = tasks.filter(t=>!t.done).length;
-      html += `<div class="category-group">
+      html += `<div class="category-group" id="cat-${cat.replace(/[^a-zA-Z0-9]/g,'-')}">
         <div class="category-header">
           <span class="category-icon">${icon}</span>
           <span class="category-name">${cat}</span>
@@ -465,6 +485,27 @@
       html += '</div>';
     }
     container.innerHTML = html;
+
+    // Rebuild category nav chips based on what's visible
+    const nav = document.getElementById('category-nav');
+    nav.innerHTML = '';
+    for (const cat of CAT_ORDER) {
+      if (!groups[cat] || groups[cat].length === 0) continue;
+      const icon = CATEGORIES[cat] || '📋';
+      const chip = document.createElement('div');
+      chip.className = 'filter-chip cat-nav-chip';
+      chip.textContent = icon + ' ' + cat;
+      chip.onclick = () => {
+        const el = document.getElementById('cat-' + cat.replace(/[^a-zA-Z0-9]/g, '-'));
+        if (el) {
+          const offset = document.querySelector('.hero').offsetHeight +
+                         document.querySelector('.progress-wrap').offsetHeight + 16;
+          const top = el.getBoundingClientRect().top + window.scrollY - offset;
+          window.scrollTo({ top, behavior: 'smooth' });
+        }
+      };
+      nav.appendChild(chip);
+    }
   }
 
   function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
